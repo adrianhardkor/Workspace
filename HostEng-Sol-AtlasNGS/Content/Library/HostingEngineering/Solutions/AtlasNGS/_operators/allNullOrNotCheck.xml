@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="8ea2b15a-561d-4741-830d-8d7004cd1b5b">
+  <descriptionCdata><![CDATA[8ea2b15a-561d-4741-830d-8d7004cd1b5b.description=<pre>Operation to check for null or empty string local variables.\n\nInputs\:\n\ninputList\:  comma seperated list of variables to check\n\nReponsses\:\nhasNull\:  at least one variable is null or has an empy string for a value\nnoNulls\:  all variables have a value\n\nResult\:  List of variables that are null or empty strings\n\n</pre>
+]]></descriptionCdata>
+  <annotation>8ea2b15a-561d-4741-830d-8d7004cd1b5b.description</annotation>
+  <name>allNullOrNotCheck</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="29048bb4-d9fa-4919-b6dd-f53ceda4cab3">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>inputList</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="5fc888e7-c0e9-44b7-900f-4ace601f0b98">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${inputList}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="e3165fde-2638-42f0-a1f5-5acbcdfaaa31">
+    <annotation></annotation>
+    <name>Operation:allNullOrNotCheck (8ea2b15a-561d-4741-830d-8d7004cd1b5b)</name>
+    <script>var myInputs = inputList.split(&quot;,&quot;);
+var myResult = &quot;&quot;;
+var nullOrNot = &quot;&quot;;
+if (scriptletContext.get(myInputs[0]) == null || trim(scriptletContext.get(myInputs[0]))==&quot;&quot;) {
+    nullOrNot = &quot;allShouldBeNull&quot;;}
+ else
+     nullOrNot = &quot;allShouldHaveValue&quot;;
+
+
+for (var i = 0; i &lt; myInputs.length; i++) {
+    if (nullOrNot == &quot;allShouldBeNull&quot;) {
+	    if (scriptletContext.get(myInputs[i]) != null &amp;&amp; trim(scriptletContext.get(myInputs[i])) != &quot;&quot;)
+		    myResult += myInputs[i] + &quot; isNotNull\n&quot;;
+    } else if (nullOrNot == &quot;allShouldHaveValue&quot;) {
+	    if (scriptletContext.get(myInputs[i]) == null || trim(scriptletContext.get(myInputs[i]))==&quot;&quot;)
+		    myResult += myInputs[i] + &quot; isNull\n&quot;;        
+    }
+}
+
+if (myResult.length &gt; 0) {
+	scriptletResponse = &quot;notUniversal&quot;; 
+	scriptletResult = myResult;}
+else {
+    if (scriptletContext.get(myInputs[i]) == null || trim(scriptletContext.get(myInputs[i]))==&quot;&quot;) {
+        scriptletResponse = &quot;universalNull&quot;;
+    } else
+	    scriptletResponse = &quot;universalExist&quot;;
+}
+		
+function trim(value){
+var s = &quot;&quot;+value;
+s.replace(/^\s*|\s*$/g, &quot;&quot;)
+return s;
+}</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="e7c87d5a-79a9-4ac6-b545-21d0f810f5c1">
+      <annotation></annotation>
+      <name>universalExist</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="0340cc54-8b6c-4830-9fa9-961721c27e62">
+      <annotation></annotation>
+      <name>notUniversal</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="beaff7a4-279f-4436-8e48-0a99599a4ab5">
+      <annotation></annotation>
+      <name>universalNull</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>DIAGNOSED</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="ea91db36-a363-4341-9cf2-fb0f06aaf4a6">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="443b37cd-a092-4bbb-a4c1-d88473286648">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="cc584336-6447-4a70-a2cc-5c0166ea82ee">
+  <descriptionCdata><![CDATA[cc584336-6447-4a70-a2cc-5c0166ea82ee.description=<pre>\nSynopsis\n\n    This operator finds the first "open" slot in a sorted list of positive integers. It uses a binary search to find the first open number.\n\nInputs\n\n    numbersList - A delimiter-separated list of integers to check against (required).\n      Valid values\: Positive integers.\n      Default value\: None.\n\n    delimiter - A sequence of one or more characters used to specify a boundary in a data stream (required).\n      Valid values\: \n      Default value\: Comma (,).\n\nResults\n\n    Result - Index value of the first available open slot in the list of integers, or a result of -1 if no open slot is found.\n\nResponses\n\n    Success -The operation completed successfully.\n\nNotes\n\n    1. Nothing of note.\n\n</pre>
+]]></descriptionCdata>
+  <annotation>cc584336-6447-4a70-a2cc-5c0166ea82ee.description</annotation>
+  <name>getFirstMissingPostiveInteger</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="321daff0-71e8-489a-93d8-79073ff48cf5">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>numbersList</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="32b221ec-f4f2-412a-9698-04038e88a1b7">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>delimiter</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>,</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="ee72c003-5b5c-492f-8dbb-907263af10dc">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${numbersList}</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="2168e7b3-0e4a-4bb5-8e8b-1d0fb136a6c8">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_2</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${delimeter}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="27f6d4e1-d17c-492c-91fa-67c0061d6c78">
+    <annotation></annotation>
+    <name>Operation:getFirstMissingPostiveInteger (cc584336-6447-4a70-a2cc-5c0166ea82ee)</name>
+    <script>var numbers = numbersList.split(delimiter);
+
+var length = numbers.length;
+var left = 0;
+var right = length - 1;
+var middle;
+var result = -1;
+
+while (left &lt;= right)
+{
+    middle = (right + left) &gt;&gt; 1;
+    if (numbers[middle] != middle)
+    {
+        if (middle == 0 || (numbers[middle - 1] == middle - 1))
+        {
+            result = middle;
+            break;
+        }
+        right = middle - 1;
+    }
+    else
+    {
+        left = middle + 1;
+    }
+}
+
+scriptletResponse = &quot;success&quot;;
+scriptletResult = result;
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="38844415-d892-470b-821a-bff3f410e9bc">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="1e465d58-6ba6-4ae4-9366-607d9b907c5b">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="0558c9f2-d8f8-4cf0-8952-875fa39cc286">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="6f785fbd-552b-44e2-bf87-0694ff1face1">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers>
+      <iconSpec id="f1049157-cadd-43ef-9839-eebada1dd0ca">
+        <baseIcon>send.png</baseIcon>
+        <basePath>/Annotations/</basePath>
+        <readOnly>false</readOnly>
+        <layers/>
+      </iconSpec>
+    </layers>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

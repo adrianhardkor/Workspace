@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="30d54df7-d771-40b1-a8e7-46bfaca57d2a">
+  <descriptionCdata><![CDATA[30d54df7-d771-40b1-a8e7-46bfaca57d2a.description=<pre>Operation to set variables to null in both Global and Local context\n\nInputs\:\n\ninputList\:  comma seperated list of variables to check\n\n</pre>
+]]></descriptionCdata>
+  <annotation>30d54df7-d771-40b1-a8e7-46bfaca57d2a.description</annotation>
+  <name>setGlobalAndLocalVarsToNull</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="a3b14622-f342-47eb-ac74-b077231c1ee1">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>inputList</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="c7b41d52-86d3-43d1-818c-4c7e4019faa6">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${inputList}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="9fad38b0-a206-4d8d-bc96-be198f875a98">
+    <annotation></annotation>
+    <name>Operation:setGlobalAndLocalVarsToNull (30d54df7-d771-40b1-a8e7-46bfaca57d2a)</name>
+    <script>var myInputs = inputList.split(&quot;,&quot;);
+
+for (var i = 0; i &lt; myInputs.length; i++) {
+	scriptletContext.putGlobal(myInputs[i], null);
+	scriptletContext.put(myInputs[i], null);
+}
+scriptletResponse = &quot;success&quot;;
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="340eef59-63e6-4def-ad7d-bbd408753577">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="d97b1e11-0554-48d0-baba-7f4fdd48c549">
+      <annotation></annotation>
+      <name>failed</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="a3c45c80-01d4-430d-874d-eac2fd27f310">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="357772d1-ed99-4ab9-aaa4-1b1fef5488c6">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

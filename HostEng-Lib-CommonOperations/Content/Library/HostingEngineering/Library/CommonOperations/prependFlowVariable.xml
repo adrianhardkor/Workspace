@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="87dc44a9-9cb8-492c-a879-cd9da84d2c7e">
+  <descriptionCdata><![CDATA[87dc44a9-9cb8-492c-a879-cd9da84d2c7e.846b0ece-705b-4524-ad75-77dc0af73228.prompt=Value\:
+87dc44a9-9cb8-492c-a879-cd9da84d2c7e.b1700774-e2c0-4da6-a0cf-38739e3fd022.prompt=Key Name\:
+87dc44a9-9cb8-492c-a879-cd9da84d2c7e.description=<pre>Prepends a flow variable in the local context.\n\nInput Parameters\:\nvarName - the name of the flow variable to use\nvalueToPrepend - value to prepend\n\nResponses\:\nsuccess - assigned the flow variable\n\n</pre>
+]]></descriptionCdata>
+  <annotation>87dc44a9-9cb8-492c-a879-cd9da84d2c7e.description</annotation>
+  <name>prependFlowVariable</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="b1700774-e2c0-4da6-a0cf-38739e3fd022">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>varName</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt>87dc44a9-9cb8-492c-a879-cd9da84d2c7e.b1700774-e2c0-4da6-a0cf-38739e3fd022.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="846b0ece-705b-4524-ad75-77dc0af73228">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>valueToPrepend</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt>87dc44a9-9cb8-492c-a879-cd9da84d2c7e.846b0ece-705b-4524-ad75-77dc0af73228.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="e358a676-71b8-404b-ab51-61e359816d44">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${varName}</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="8b971424-7e08-444f-b368-1792923722f4">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_2</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${valueToPrepend}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="d956bddc-bb10-4638-8b71-06efc56f290a">
+    <annotation></annotation>
+    <name>Operation:Prepend Flow Variable (87dc44a9-9cb8-492c-a879-cd9da84d2c7e)</name>
+    <script>
+myOriginalName = varName;
+myOriginalValue = scriptletContext.get(myOriginalName); 
+myPrependValue = valueToPrepend;
+
+myNewValue = myPrependValue + myOriginalValue;
+
+scriptletContext.put(myOriginalName,myNewValue); 
+
+scriptletResponse = &quot;Success&quot;; 
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="73e585ad-eb72-4d61-8dd7-61c7acbfadd6">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="9ef83de7-83b7-4189-a93c-1ee18421fa12">
+    <annotation></annotation>
+    <name></name>
+    <fieldName>Field_2</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="3f0c63bc-20f8-4503-9f26-52d5a6da17a8">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

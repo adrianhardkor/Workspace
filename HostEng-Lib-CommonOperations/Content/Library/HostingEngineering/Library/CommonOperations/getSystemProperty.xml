@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="ee18a6a8-f9f8-46c6-bea7-dc3795b81b0f">
+  <descriptionCdata><![CDATA[ee18a6a8-f9f8-46c6-bea7-dc3795b81b0f.description=<pre>Operation to check system properties\n\nInputs\:\n\npropertyNames\:  comma seperated list of properties to check\n\nReponsses\:\nhasNull\:  at least one property is null or has an empy string for a value\nnoNulls\:  all variables have a value\n\nResult\:  List of variables that are null or empty strings or a list of properties and their values\n\n</pre>
+]]></descriptionCdata>
+  <annotation>ee18a6a8-f9f8-46c6-bea7-dc3795b81b0f.description</annotation>
+  <name>getSystemProperty</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="827e6ffe-dcdd-481c-bb7d-36285a79675d">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>propertyNames</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <scriptlet id="105c1a4b-92a6-4c49-8fdc-51ccb4a6feaa">
+    <annotation></annotation>
+    <name>Operation getSystemProperty (ee18a6a8-f9f8-46c6-bea7-dc3795b81b0f)</name>
+    <script>var myInputs = propertyNames.split(&quot;,&quot;);
+var myNullResult = &quot;&quot;;
+var myNoNullResult = &quot;&quot;;
+for (var i = 0; i &lt; myInputs.length; i++) {
+	if (scriptletContext.get(myInputs[i]) == null || trim(scriptletContext.get(myInputs[i]))==&quot;&quot;) {
+		myNullResult += myInputs[i] + &quot; is Null\n&quot;;}
+	else { myNoNullResult += myInputs[i] + &quot; is &quot; + trim(scriptletContext.get(myInputs[i])) + &quot;\n&quot;;}
+}
+var myFullResult = myNullResult + myNoNullResult;
+
+if (myNullResult.length &gt; 0) {
+	scriptletResponse = &quot;hasNull&quot;;}
+else {
+	scriptletResponse = &quot;noNulls&quot;;}
+
+scriptletResult = myFullResult
+
+function trim(value){
+var s = &quot;&quot;+value;
+s.replace(/^\s*|\s*$/g, &quot;&quot;)
+return s;
+}</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="4db6572f-80be-4968-a694-14afd9d4989e">
+      <annotation></annotation>
+      <name>noNulls</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="4b7a093d-56d6-4e23-8d61-48ff36b0d439">
+      <annotation></annotation>
+      <name>hasNull</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="b13b4087-a44b-4916-8133-187f253fc02f">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="9befe631-12b2-4645-8b45-7addcf6df2e6">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

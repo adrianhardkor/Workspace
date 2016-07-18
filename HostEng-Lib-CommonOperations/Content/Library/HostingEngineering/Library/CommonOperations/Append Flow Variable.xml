@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="2f044696-9bfa-4c48-bca3-11964e72bb14">
+  <descriptionCdata><![CDATA[2f044696-9bfa-4c48-bca3-11964e72bb14.7cff127d-7100-43a2-9e7f-8e1bd374ab71.prompt=Value\:
+2f044696-9bfa-4c48-bca3-11964e72bb14.description=<pre>Appends a flow variable in the local context.\n\nInput Parameters\:\nvarName - the name of the flow variable to use\nvalueToAppend - value to append\n\nResponses\:\nsuccess - assigned the flow variable\n\n</pre>
+2f044696-9bfa-4c48-bca3-11964e72bb14.e9a9bfd7-bc56-4eca-8fca-e1451c66c635.prompt=Key Name\:
+]]></descriptionCdata>
+  <annotation>2f044696-9bfa-4c48-bca3-11964e72bb14.description</annotation>
+  <name>Append Flow Variable</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="e9a9bfd7-bc56-4eca-8fca-e1451c66c635">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>varName</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt>2f044696-9bfa-4c48-bca3-11964e72bb14.e9a9bfd7-bc56-4eca-8fca-e1451c66c635.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="7cff127d-7100-43a2-9e7f-8e1bd374ab71">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>valueToAppend</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt>2f044696-9bfa-4c48-bca3-11964e72bb14.7cff127d-7100-43a2-9e7f-8e1bd374ab71.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="c5272c79-def7-43ee-8bbb-0366fdaf64cc">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${varName}</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="90290ee7-d2cd-4695-ace9-187566cc40fe">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_2</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${valueToAppend}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="6a9e7103-2d1b-4c03-816f-bee93192c4ab">
+    <annotation></annotation>
+    <name>Operation Append Flow Variable (2f044696-9bfa-4c48-bca3-11964e72bb14)</name>
+    <script>
+myOriginalName = varName;
+myOriginalValue = scriptletContext.get(myOriginalName); 
+myAppendValue = valueToAppend;
+
+myNewValue = myOriginalValue + myAppendValue;
+
+scriptletContext.put(myOriginalName,myNewValue); 
+
+scriptletResponse = &quot;Success&quot;; 
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="770b8ab1-1c21-4222-bebe-2ddd8819d498">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="cd44c995-316c-4232-ade6-8253c8d9bebc">
+    <annotation></annotation>
+    <name></name>
+    <fieldName>Field_2</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="e930dfdf-c351-4bc4-8cd7-1510e99e35b3">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

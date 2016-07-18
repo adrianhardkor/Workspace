@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="d80971a2-193b-4e38-9f2e-116c965f8b0a">
+  <descriptionCdata><![CDATA[d80971a2-193b-4e38-9f2e-116c965f8b0a.description=<pre>Executes a command from the command line of a remote RAS.\n\nOn unix we cannot mandate what type of shell to be used (sh, bash, ksh, csh, etc), so be sure to include the shell in your command\nif you need things like file redirection.  Example\:\nsh -c "ls -lha /etc > /tmp/myfile"\n\nOn Windows, this command will prepend cmd.exe /C or command.exe /C to the command you specify, so there is no need to pass that into this operation.\n\nInputs\:\n    command - the command to execute.\n    arguments - any arguments to command.\n    environment - Specifies environment variables/values that need to be defined when running command.\n    path - The path to the commands executable\n    cmd_timeout - Timeout in milliseconds before the command is considered failed when returnImmediately is false.\nDefault value\: 100000 (100 seconds).\n    returnImmediately - If true, the operation will execute the command and return immediately.  It will not wait for the command to finish.\nValid values\: true, false.\nDefault value\: false.\n\nResponses\:\n    success - The command executed successfully.\n    failure - The command failed to execute.\n\nResults\:\n    STDOUT - The standard output of the command.\n    STDERR - The standard error output of the command.\n</pre>
+]]></descriptionCdata>
+  <annotation>d80971a2-193b-4e38-9f2e-116c965f8b0a.description</annotation>
+  <name>callRasBashNoStatus</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="d6a8abd2-0904-42de-9a35-0412eedc615c">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>scriptName</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="2f054664-3438-4c86-90f1-80073f621a47">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>scriptArgs</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="1a39cf0c-3859-4b80-ada7-8c70d6eae3c6">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>command</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>bash</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="764abd24-7a37-4bd3-9384-865604d996d4">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>arguments</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>${hosteng_atlas_scriptpath}/${scriptName} ${scriptArgs}</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="9a9ec4bd-c17f-480b-b968-9d881fdcc181">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>environment</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="cdf4b05f-bb63-4277-a79d-977aff0cdde6">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>path</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>/bin</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="cb3073d8-76d2-48da-bbea-6314811a1435">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>cmd_timeout</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>300000</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="46f52d63-e740-49c4-a7f0-4d2408867981">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>returnImmediately</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>false</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <possibleResponses>
+    <opResponse id="d13f1d0a-0220-494d-b75c-4276198c303e">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules>
+        <expression id="9f1d75b2-97d6-40a8-823b-4b49752ad94e">
+          <annotation></annotation>
+          <name></name>
+          <fieldName>returnCode</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="f1aad765-1f0b-4726-827e-7445efb83d4c">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>0</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+    <opResponse id="2c6fd739-4d2b-4a98-83c3-73685486ed34">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules>
+        <expression id="990def04-a36b-4f0a-840b-8ca2ee98f02d">
+          <annotation></annotation>
+          <name></name>
+          <fieldName>returnCode</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="820c07c2-1979-40c9-aaf6-a0b67ee22558">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>-1</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="630e4b59-6602-4c6a-b0d8-efc6f7efb407">
+    <annotation></annotation>
+    <name></name>
+    <fieldName>FailureMessage</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="c9257af7-f731-4c16-92d5-a79b2971ece3">
+    <baseIcon>text_msg.png</baseIcon>
+    <basePath>/E-mail/</basePath>
+    <readOnly>false</readOnly>
+    <layers>
+      <iconSpec id="bca4eefa-3e0f-4833-8a0b-f983616d7a8e">
+        <baseIcon>worker.png</baseIcon>
+        <basePath>/Annotations/</basePath>
+        <readOnly>false</readOnly>
+        <layers/>
+      </iconSpec>
+    </layers>
+  </iconSpec>
+  <opRef>
+    <refId>83f5483f-8b4f-42c3-bfbb-b68a8d320fb3</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+  <overrideGroupAlias>${overrideJRAS}</overrideGroupAlias>
+</operation>

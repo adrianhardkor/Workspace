@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="ac481ac7-79ef-437d-8ff8-6e2af1868297">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>xslt</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="b8ebe188-770f-4f2d-b6ea-511242a65318">
+      <annotation></annotation>
+      <fromContextKey>myXslt</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>xsltIn</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="d5cb78c0-5964-427d-ba47-682986dee4cb">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>xmlIn</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <scriptlet id="6f0a9abd-22c2-43bd-af2e-b4d94e53a4f1">
+    <annotation></annotation>
+    <name>Operation xslt (ac481ac7-79ef-437d-8ff8-6e2af1868297)</name>
+    <script>
+try {
+    var File = java.io.File;
+    var StringReader = java.io.StringReader;
+    var StringWriter = java.io.StringWriter;
+    var StreamSource = javax.xml.transform.stream.StreamSource;
+    var StreamResult = javax.xml.transform.stream.StreamResult;
+    
+    var xslt = new StreamSource(new StringReader(xsltIn));
+    var text = new StreamSource(new StringReader(xmlIn));
+
+    var TransformFactory = javax.xml.transform.TransformerFactory.newInstance();
+    var transformer = TransformFactory.newTransformer(xslt);
+    var writer = new StringWriter();
+    transformer.transform(text, new StreamResult(writer));
+    var output = writer.toString();
+    scriptletResult = output;
+    scriptletResponse = &quot;success&quot;;
+    }
+catch(err) {
+    scriptletResult = err.message;
+    scriptletResponse = &quot;failure&quot;;
+    }
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="1c86c6b5-1a91-4628-b373-f8882d7bbc63">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="b4cb8d63-7e76-46fc-915b-fe766286fa0d">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="d5cc776a-531d-47b1-9120-4f916ae8f869">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="b3c0b328-129d-4626-9d75-0cab7c1a9c98">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

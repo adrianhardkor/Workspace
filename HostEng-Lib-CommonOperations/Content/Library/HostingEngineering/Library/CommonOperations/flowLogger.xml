@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="34a50a74-0971-4714-9f60-0dfcd54d0529">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>flowLogger</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="72bc8fa4-8f8c-482e-b51e-a4894de3d98d">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>externalKey</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="a50f5254-1ced-418e-b7fb-eb2501a1e0cc">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>logLevel</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="81278c54-7dac-4c55-916e-9e43156330c3">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>logMessage</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="daae78fc-094f-4207-bff0-a34722e81787">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>logVariable</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="4ee8ba48-8e0f-4f72-a2e4-383e564cb3d7">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>logPath</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <scriptlet id="c5bda4a6-f754-4a6b-bae8-5ea1ccfd5581">
+    <annotation></annotation>
+    <name>Operation:flowLogger (27e25c9f-b437-4391-8c47-267023735ed8)</name>
+    <script>
+//log level
+var myLevel = logLevel;
+if (myLevel == &quot;&quot; || myLevel == null || typeof myLevel == &quot;undefined&quot;) {
+    myLevel = &quot;INFO&quot;; //default to INFO
+    } else {
+    myLevel = myLevel.toUpperCase();
+    }
+    
+//setup timestamp
+var Date = java.util.Date;
+var Calendar = java.util.Calendar;
+var SimpleDateFormat = java.text.SimpleDateFormat;
+var today = Calendar.getInstance().getTime();
+var formatter = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss.SSS&quot;);
+var stamp = String(formatter.format(today));
+
+//grab local hostname
+var InetAddress = java.net.InetAddress;
+var hname = InetAddress.getLocalHost().getHostName();
+
+//grab user
+var flowUser = scriptletContext.get(&quot;execution_userid&quot;);
+
+//grab flow information - runhistid and flow uuid
+var repairUrl = runService.getRunReportLink();
+//var repairUrl = &quot;https://10.12.132.166:8443/PAS/app?service=RCLinkService/ReportLinkDispatch&amp;sp=SINDIVIDUAL_REPAIR_LEVEL&amp;sp=f4f96a41-2e9c-4939-95bb-66dd9e079110&amp;sp=l0&amp;sp=|9999&quot;;
+var runHistId = &quot;&quot;;
+var rx = new RegExp(/\d+$/);
+if (rx.exec(repairUrl) == &quot;&quot; | rx.exec(repairUrl) == null ) {
+    runHistId = &quot;DEBUGFLOWID&quot;;
+    } else {
+    runHistId = rx.exec(repairUrl);
+    }
+    
+var uuid = new RegExp(/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/);
+if (uuid.exec(repairUrl) == &quot;&quot; | uuid.exec(repairUrl) == null ) {
+    flowUUID = &quot;DEBUGUUID&quot;;
+    } else {
+    flowUUID = uuid.exec(repairUrl);
+    }
+
+//our base formatting
+//var logWrap = stamp + &quot; &quot; + myLevel + &quot; &quot; +  externalKey + &quot; &quot; + hname + &quot; OOFlowUUID.&quot; + flowUUID + &quot; OOUser.&quot; + flowUser + &quot; OORunHistId.&quot; + runHistId + &quot; &quot;;
+var logWrap = stamp + &quot; | &quot; + myLevel + &quot; | &quot; +  externalKey + &quot; | &quot; + hname + &quot; | &quot; + flowUUID + &quot; | &quot; + flowUser + &quot; | &quot; + runHistId + &quot; | &quot;;
+
+
+//create array from logMessage based on newline
+var messageArray = logMessage.split(&quot;\n&quot;);
+var wrappedMessage = [];
+//wrap each line with our log formatting
+for ( var m = 0; m &lt; messageArray.length; m++) {
+    if (messageArray[m] != null &amp;&amp; messageArray[m] != &quot;&quot;) {
+        if (m == 0) {
+            var logvalue = logWrap + messageArray[m];
+            } else {
+            var logvalue = logWrap + &quot;\t...(cont.) &quot; + messageArray[m];
+            }
+        wrappedMessage.push(logvalue);
+        }
+    }
+
+//check logVariable, if null then instantiate with our message, if not null, append our message
+if (scriptletContext.getLocal(logVariable) == null || scriptletContext.getLocal(logVariable) == &quot;&quot;) {
+		scriptletContext.put(logVariable,  wrappedMessage.join(&quot;\n&quot;));
+		}
+		else { 
+		scriptletContext.put(logVariable,  scriptletContext.getLocal(logVariable) + &quot;\n&quot; + wrappedMessage.join(&quot;\n&quot;));
+		}
+
+//check for logPath, if not null, write/append to file named UUID_RunHIstId.log.
+if (logPath != null &amp;&amp; logPath != &quot;&quot; &amp;&amp; typeof logPath != &quot;undefined&quot;) {
+    var BufferedWriter = java.io.BufferedWriter;
+    var FileWriter = java.io.FileWriter;
+    var filepath = logPath + &quot;\\&quot; + flowUUID + &quot;_&quot; + runHistId + &quot;.log&quot;;
+    var fileWritter = new FileWriter(filepath, true);
+    var bwr = new BufferedWriter(fileWritter);
+    bwr.write(wrappedMessage.join(&quot;\n&quot;) + &quot;\n&quot;);
+    bwr.close();
+}
+
+
+scriptletResult = wrappedMessage.join(&quot;\n&quot;) + &quot;\n&quot;;
+scriptletResponse = &quot;success&quot;;
+
+
+/* THIS IS THE JSON FORMAT FOR SPLUNK
+{
+&quot;date&quot; : &quot;10/14/2013 20:16:26.480Z&quot;, 
+ &quot;level&quot; : &quot;INFO&quot;,
+  &quot;logguid&quot; : &quot;b06fefa7-32b2-11e3-9cbf-5d819ede7bb5&quot;,
+  &quot;hostname&quot; : &quot;dc2esbappdv01.it.savvis.net&quot;,
+&quot;component&quot; : &quot;org.mule.module.logging.DispatchingLogger.info(DispatchingLogger.java:197)&quot;,
+  &quot;thread&quot; : &quot;Thread-79&quot;,  
+  &quot;message&quot; : &quot;Test message&quot;
+}
+*/
+
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="2192af90-ef8c-4477-aaa9-9e1585d47a26">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="b3417141-46f3-4882-91a9-60e05721fba7">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="bc62082a-cbb9-4e05-be99-956ff2a71a36">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="d53f6d6d-4fb6-48a4-8309-11d96e7afdd9">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

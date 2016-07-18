@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="db2379bc-1ae3-48aa-bcb7-99d8d53f2c32">
+  <descriptionCdata><![CDATA[db2379bc-1ae3-48aa-bcb7-99d8d53f2c32.941e498b-5953-4358-8ad7-f0ae01342083.prompt=Flow Name\:
+db2379bc-1ae3-48aa-bcb7-99d8d53f2c32.description=<pre>Command-line operation to log flow failures that need external log monitoring.\n\nInputs\:\nflowName\: name of the flow to be logged.\nerrorMsg\: error message to be logged.\n\nOutputs\:\nCode - this value is 0 if it is able to write to the log file, else 1 if it unable to write to the log file.\n\nResponses\:\nfailure - There is a flow failure and failure is logged.\n\n</pre>
+]]></descriptionCdata>
+  <annotation>db2379bc-1ae3-48aa-bcb7-99d8d53f2c32.description</annotation>
+  <name>AutomationCenterException</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="941e498b-5953-4358-8ad7-f0ae01342083">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>flowName</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt>db2379bc-1ae3-48aa-bcb7-99d8d53f2c32.941e498b-5953-4358-8ad7-f0ae01342083.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="a9b84a91-a0ac-40e5-a982-efd067b73461">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>errorMsg</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>undefined</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="eda3640f-6dc4-477c-b6fc-0306e786fbec">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Path</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${AC_EXCEPTION_PATH}</value>
+      <record>false</record>
+    </staticBinding>
+    <userInputBinding id="010180f3-1b21-4546-9d74-5cb98567a1d8">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Argument</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="52aff72d-1ba6-4a2d-99fc-8604448aaf65">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Command</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>echo %DATE% %TIME% HPOO_Exception ${flowName} ${errorMsg} &gt;&gt; AutomationCenter_Exception.log</value>
+      <record>false</record>
+    </staticBinding>
+    <userInputBinding id="461426ab-a496-49fc-bc2e-822131e8a2f5">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Environment</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="24726fb5-dc1d-4bce-b243-9dbff4faa443">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Working_Dir</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${AC_EXCEPTION_DIRECTORY}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <possibleResponses>
+    <opResponse id="0b0784b3-518f-4bfc-b0bd-697fe6f5b6cb">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions>
+    <expression id="9e4562a2-846d-45f4-8f5e-af571e338b61">
+      <annotation></annotation>
+      <name>Code</name>
+      <fieldName>Code</fieldName>
+      <sourceType>RAWRESULT</sourceType>
+      <filters/>
+    </expression>
+  </availableResultExpressions>
+  <resultExpression id="62b97680-a178-424e-a58b-42816de1af73">
+    <annotation></annotation>
+    <name>Code</name>
+    <fieldName>Error String</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="445b43b8-bdd7-4b80-b339-2c62a6a86375">
+    <baseIcon>cmd.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>77f849f5-ea91-437e-b8d2-c1f70038b181</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

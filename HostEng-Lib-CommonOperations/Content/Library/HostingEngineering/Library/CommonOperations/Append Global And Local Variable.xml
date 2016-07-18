@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="95bab08e-6a5e-4797-8842-4356e3c2427d">
+  <descriptionCdata><![CDATA[95bab08e-6a5e-4797-8842-4356e3c2427d.description=<pre>Operation to set variables to null in both Global and Local context\n\nInputs\:\n\ninputList\:  comma seperated list of variables to check\n\n</pre>
+]]></descriptionCdata>
+  <annotation>95bab08e-6a5e-4797-8842-4356e3c2427d.description</annotation>
+  <name>Append Global And Local Variable</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="cd5353c3-d27d-445b-a82a-6dd617e169f5">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>globalIndex</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <userInputBinding id="44814669-028e-4745-95be-68a50cf7d35c">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>appendValue</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="eee24a38-1101-490f-83a7-0ad8f4745fc7">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${inputList}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="97ef0b42-2a76-430d-9443-e4e393d3beac">
+    <annotation></annotation>
+    <name>Operation:Append Global And Local Variable (95bab08e-6a5e-4797-8842-4356e3c2427d)</name>
+    <script>var myOriginalValue = scriptletContext.get(globalIndex); 
+var myNewValue = myOriginalValue + appendValue;
+
+scriptletContext.putGlobal(globalIndex, myNewValue); 
+scriptletContext.put(globalIndex, myNewValue);
+
+scriptletResponse = &quot;success&quot;;</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="a13c1aad-0864-4554-ae19-060564129de2">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="a24734d7-da2a-430e-9ab8-a21b767d5e8e">
+      <annotation></annotation>
+      <name>failed</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="523cd40b-ab19-4ec4-b932-dcf612a839ac">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="22e35632-142c-48d9-bac3-d1baa6c935fb">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

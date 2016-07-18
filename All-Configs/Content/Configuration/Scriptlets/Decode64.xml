@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scriptlet id="8da753d7-e338-44bb-bbdf-d8214ad46566">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>Decode64</name>
+  <script>function decode64(input) {
+
+var keyStr = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;;
+
+   var output = &quot;&quot;;
+   var chr1, chr2, chr3;
+   var enc1, enc2, enc3, enc4;
+   var i = 0;
+
+   // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+   input = input.replace(/[^A-Za-z0-9\+\/\=]/g, &quot;&quot;);
+
+   do {
+      enc1 = keyStr.indexOf(input.charAt(i++));
+      enc2 = keyStr.indexOf(input.charAt(i++));
+      enc3 = keyStr.indexOf(input.charAt(i++));
+      enc4 = keyStr.indexOf(input.charAt(i++));
+
+      chr1 = (enc1 &lt;&lt; 2) | (enc2 &gt;&gt; 4);
+      chr2 = ((enc2 &amp; 15) &lt;&lt; 4) | (enc3 &gt;&gt; 2);
+      chr3 = ((enc3 &amp; 3) &lt;&lt; 6) | enc4;
+
+      output = output + String.fromCharCode(chr1);
+
+      if (enc3 != 64) {
+         output = output + String.fromCharCode(chr2);
+      }
+      if (enc4 != 64) {
+         output = output + String.fromCharCode(chr3);
+      }
+   } while (i &lt; input.length);
+
+   return output;
+}
+
+function utf8to16(str) {
+    var out, i, len, c;
+    var char2, char3;
+
+    out = &quot;&quot;;
+    len = str.length;
+    i = 0;
+    while(i &lt; len) {
+	c = str.charCodeAt(i++);
+	switch(c &gt;&gt; 4)
+	{ 
+	  case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+	    // 0xxxxxxx
+	    out += str.charAt(i-1);
+	    break;
+	  case 12: case 13:
+	    // 110x xxxx   10xx xxxx
+	    char2 = str.charCodeAt(i++);
+	    out += String.fromCharCode(((c &amp; 0x1F) &lt;&lt; 6) | (char2 &amp; 0x3F));
+	    break;
+	  case 14:
+	    // 1110 xxxx  10xx xxxx  10xx xxxx
+	    char2 = str.charCodeAt(i++);
+	    char3 = str.charCodeAt(i++);
+	    out += String.fromCharCode(((c &amp; 0x0F) &lt;&lt; 12) |
+					   ((char2 &amp; 0x3F) &lt;&lt; 6) |
+					   ((char3 &amp; 0x3F) &lt;&lt; 0));
+	    break;
+	}
+    }
+
+    return out;
+}
+
+scriptletResult = decode64(scriptletInput)</script>
+  <type>RHINO</type>
+</scriptlet>

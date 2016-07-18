@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="b01033cd-d668-4daf-9774-3ddd811e7f18">
+  <descriptionCdata><![CDATA[b01033cd-d668-4daf-9774-3ddd811e7f18.description=<pre>This operation checks if one of the input values is not null. If all the values are null then the operation returns failure else its a success.\n\nInputs\:\neventId - EventId from the ASP search\ntrapSourceIp - TrapSourceIp  from the ASP search\nsiteId - SiteId  from the ASP search\nobjectId - ObjectId  from the ASP search\n\nResponses\:\nsuccess - If everything went fine.\nfailure - If something went wrong.\n\n</pre>
+]]></descriptionCdata>
+  <annotation>b01033cd-d668-4daf-9774-3ddd811e7f18.description</annotation>
+  <name>ValidateASPInputValues</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="9230b866-06db-49ee-8970-0dca09b55e49">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>eventId</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="4645e5d4-ff03-4295-918c-aceafd23b238">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>objectId</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="619df65b-b4bc-436f-9028-b0c7c131c8aa">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>siteId</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="c48e311c-60b2-4958-ba5a-5fe0105a6231">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>trapSourceIp</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <scriptlet id="f32b5658-51ee-4614-bee5-fc030fbf26b0">
+    <annotation></annotation>
+    <name>Operation:ValidateASPInputValues (b01033cd-d668-4daf-9774-3ddd811e7f18)</name>
+    <script>function trim(inputValue){
+    return inputValue.replace(/^\s*|\s*$/g, &apos;&apos;);
+};
+
+if(eventId != null &amp;&amp; ((trim(eventId)).length &gt; 0))
+    scriptletResponse = &quot;success&quot;;
+else if(objectId != null &amp;&amp; ((trim(objectId)).length &gt; 0)) 
+    scriptletResponse = &quot;success&quot;;
+else if(siteId != null &amp;&amp; ((trim(siteId)).length &gt; 0))
+    scriptletResponse = &quot;success&quot;;       
+else if(trapSourceIp != null &amp;&amp; ((trim(trapSourceIp)).length &gt; 0))
+    scriptletResponse = &quot;success&quot;;
+else
+   scriptletResponse = &quot;failure&quot;;</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="2ccf49cd-e401-44f5-8bef-2a1a116000e6">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="53681466-2972-4bc8-9424-e1ce7d12662c">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="070dff79-e86f-48a8-95ec-45bee86836dd">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="839ebf31-9484-4f30-9264-7566e643ed09">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="4e1e0ff2-4334-43e7-85f7-94399bbabcc6">
+  <descriptionCdata><![CDATA[4e1e0ff2-4334-43e7-85f7-94399bbabcc6.description=<pre>Operation to add and offset to a network block address\n\nInputs\:\n\nipBlock\: a network address\noffset\: offset number to add to block to get an IP address\n\nReponsses\:\nsuccess\:  the operation created a valid IP address\nfailure\:  the result was not a valid IP address\n\nResult\:  a offset IP address\n\n</pre>
+]]></descriptionCdata>
+  <annotation>4e1e0ff2-4334-43e7-85f7-94399bbabcc6.description</annotation>
+  <name>offsetIpNetAddr</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="8b558286-9a44-4839-a035-d7bd260b2a0c">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>ipBlock</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="29c1ca70-95e0-46ba-9142-53dce1ba1e27">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>offset</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="f1d4a605-31a0-4512-9803-a60872478b96">
+    <annotation></annotation>
+    <name>Operation:offsetIpNetAddr (4e1e0ff2-4334-43e7-85f7-94399bbabcc6)</name>
+    <script>var myBlock = ipBlock.split(&quot;.&quot;);
+var myOffset = offset;
+// Add the offset to the 4th octet value
+myBlock[3] = parseInt(myBlock[3]) + parseInt(myOffset);
+
+var myIpAddr = myBlock.join(&quot;.&quot;);
+
+// Check to see if result is Valid IP address
+// Should also add something to check if the IP address result is within the blocks subnet mask range
+var myInvalidResult = &quot;&quot;;
+if (!(myIpAddr.match(/^(?:(?:25[0-4]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}?(?:25[0-4]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/)))
+    myInvalidResult += myIpAddr + &quot; is invalid\n&quot;;
+else if (myIpAddr.match(/^0\..*/)) 
+     myInvalidResult += myIpAddr +  &quot; is invalid\n&quot;    
+
+if (myInvalidResult.length &gt; 0) {
+	scriptletResponse = &quot;failure&quot;; 
+	scriptletResult = myInvalidResult;}
+else {
+	scriptletResponse = &quot;success&quot;;
+	scriptletResult = myIpAddr;}
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="4a642880-f44a-4534-b6a0-9155fa52bcec">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="caaa2c9c-e47f-438e-b58f-ad87365c00a3">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions>
+    <expression id="4b3a1d00-94e3-40e6-9bb9-3e44e77df097">
+      <annotation></annotation>
+      <name>Result</name>
+      <fieldName>Field_1</fieldName>
+      <sourceType>RAWRESULT</sourceType>
+      <filters/>
+    </expression>
+  </availableResultExpressions>
+  <resultExpression id="0fb96fbb-2d9b-4646-a7a9-459fab41b9e9">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="45209519-8080-492d-b867-a633ba1d0718">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

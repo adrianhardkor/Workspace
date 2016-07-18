@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="1b3e3de4-ab0b-44bc-9b69-33edb544eccd">
+  <descriptionCdata><![CDATA[1b3e3de4-ab0b-44bc-9b69-33edb544eccd.description=<pre>\nSnopsis\: Scriptlet that grabs all keys and out puts only keys that have Local values.  This is to emulate an ARGV type functionality.  Will only provide inputs of direct flow calling this operation.\n\nInputs\: None\n\nResults\:\nAll local variables in argv format\: "index1\=value1 index2\=value2a+value2b index3\=value3a,value3b,value3c..."\nInternal variables that can be potentially disregaurded\: (example was runCLU)\nusername\nexecution_thread_id\nRS_Previous_Transition\nwebserviceHost\nerrorDetails\nResult\nRS_Previous_Response\npassword\nflowUuid\nwebservicePort\n\nResponses\:\nfailure - Something went wrong\nsuccess - Built argv list\n</pre>
+]]></descriptionCdata>
+  <annotation>1b3e3de4-ab0b-44bc-9b69-33edb544eccd.description</annotation>
+  <name>localArgsToCLUargV</name>
+  <categories/>
+  <inputs/>
+  <scriptlet id="ef90d28a-6ce8-48ae-a994-cd400ee67c7b">
+    <annotation></annotation>
+    <name>Operation localArgsToCLUargV (1b3e3de4-ab0b-44bc-9b69-33edb544eccd)</name>
+    <script>var k1 = String(scriptletContext.getLocal(&quot;&quot;));
+var k2 = k1;
+var keys = k2;
+var keys = String(keys);
+// var keys = keys.replace(&quot;[&quot;,&quot;&quot;,&quot;g&quot;).replace(&quot;]&quot;,&quot;&quot;,&quot;g&quot;).replace(&quot;, &quot;,&quot;,&quot;,&quot;g&quot;).replace(&quot;,username&quot;,&quot;,&quot;,&quot;g&quot;).replace(&quot;,password&quot;,&quot;,&quot;,&quot;g&quot;).replace(&quot;execution_thread_id&quot;,&quot;,&quot;,&quot;g&quot;).replace(&quot;RS_Previous_Transition&quot;,&quot;,&quot;,&quot;g&quot;).replace(&quot;RS_Previous_Response&quot;,&quot;,&quot;,&quot;g&quot;).replace(&quot;delimiter&quot;,&quot;,&quot;,&quot;g&quot;).replace(&quot;fullInputList&quot;,&quot;,&quot;,&quot;g&quot;).replace(&quot;,,&quot;,&quot;,&quot;,&quot;g&quot;);
+// var keys = keys.split(&quot;,&quot;);
+var locals = [];
+var globals = [];
+locals.push(k1 + &quot;.&quot; + k2 + &quot;.&quot; + keys + &quot;.&quot;);
+for (var i = 0; i &lt; keys.length; i++) {
+	if (scriptletContext.getLocal(keys[i]) == null || scriptletContext.getLocal(keys[i]) == &quot;&quot; || typeof scriptletContext.getLocal(keys[i]) == &quot;undefined&quot; ) {
+	    if (scriptletContext.getLocal(keys[i]) == &quot;&quot;) {
+          locals.push(keys[i]);
+          locals.push(&quot;=&quot;);
+          locals.push(&quot; &quot;);	      
+	    }    
+	    } else {
+          locals.push(keys[i]);
+          locals.push(&quot;=&quot;);
+          // space-replace... no spaces in values = {\ }
+          var value = String(scriptletContext.getLocal(keys[i])).replace(&quot; &quot;,&quot;\\\ &quot;,&quot;g&quot;);
+          locals.push(value);
+          locals.push(&quot; &quot;);
+        }
+}
+
+// router=10.12.10.3  caller=HPOO  runas_vendor=Brocade_SAN 
+
+locals.push(&quot;caller=HPOO &quot;);
+scriptletResult = locals.join(&quot;&quot;);
+// scriptletResult = locals.replace(&quot;,&quot;,&quot;&quot;,&quot;g&quot;);
+scriptletResponse = &quot;success&quot;;</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="b16f2719-a057-4bfd-8fb1-8f6317823859">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="31c868a0-6792-4928-8ae7-d2b56a6ce0f6">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="b35afed1-f2bb-4421-82a3-031b3a2774f1">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="dd6ad10d-c4b6-4a8d-b6db-bcf452bbde44">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

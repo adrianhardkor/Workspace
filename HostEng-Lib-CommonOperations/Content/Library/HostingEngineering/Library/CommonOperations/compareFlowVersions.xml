@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="6ab3027d-8637-484e-8bc0-da229b2ec1c1">
+  <descriptionCdata><![CDATA[6ab3027d-8637-484e-8bc0-da229b2ec1c1.description=<pre> Purpose built for comparieFlowsByFolder flow.  Takes in Output1, Output2, centralServer1, centralServer2, and compares outputs to generate a result that is the differences.</pre>
+]]></descriptionCdata>
+  <annotation>6ab3027d-8637-484e-8bc0-da229b2ec1c1.description</annotation>
+  <name>compareFlowVersions</name>
+  <categories/>
+  <inputs/>
+  <scriptlet id="66e483c7-3719-4052-a018-e36315e53607">
+    <annotation></annotation>
+    <name>Operation compareFlowVersions (6ab3027d-8637-484e-8bc0-da229b2ec1c1)</name>
+    <script>var info_one = scriptletContext.get(&quot;Output1&quot;).split(&quot;;&quot;);
+var info_two = scriptletContext.get(&quot;Output2&quot;).split(&quot;;&quot;);
+var central_one = scriptletContext.get(&quot;centralServer1&quot;);
+var central_two = scriptletContext.get(&quot;centralServer2&quot;);
+var diffVersions = [];
+var diffPaths = [];
+var diffPathAndVersion = [];
+var foundOne = [];
+var foundTwo =[];
+
+//MAIN
+buildresult(info_one,info_two,central_one,foundOne);
+buildresult(info_two,info_one,central_two,foundTwo);
+
+scriptletResponse = &quot;success&quot;;
+scriptletResult = &quot;&lt;b&gt;Differing Versions:&lt;/b&gt;&lt;br&gt;&quot; + diffVersions.join(&quot;&lt;br&gt;&quot;) + &quot;&lt;br&gt;&lt;br&gt;&lt;b&gt;Differing Paths:&lt;/b&gt;&lt;br&gt;&quot; + diffPaths.join(&quot;&lt;br&gt;&quot;) + &quot;&lt;br&gt;&lt;br&gt;&lt;b&gt;Differing Paths and Versions:&lt;/b&gt;&lt;br&gt;&quot; + diffPathAndVersion.join(&quot;&lt;br&gt;&quot;) + &quot;&lt;br&gt;&lt;br&gt; &lt;b&gt;Found on &quot; + central_one + &quot; but not on &quot; +  central_two + &quot;: &lt;/b&gt;&lt;br&gt;&quot; + foundOne.join(&quot;&lt;br&gt;&quot;) + &quot;&lt;br&gt;&lt;br&gt;&lt;b&gt;Found on &quot; + central_two + &quot; but not on &quot; +  central_one + &quot;: &lt;/b&gt;&lt;br&gt;&quot; + foundTwo.join(&quot;&lt;br&gt;&quot;);
+
+
+//array builder funtion
+function buildresult(array1,array2,host,notfound) {
+    for (var i = 0; i &lt; array1.length; i++) {
+        var uuid = array1[i].split(&quot;,&quot;)[0]
+        var path = array1[i].split(&quot;,&quot;)[1]
+        var version = array1[i].split(&quot;,&quot;)[2]
+        
+        var myAnswer = checkarray(array2,uuid,path,version);
+        
+        if(myAnswer == &quot;vdiff&quot;) {
+        var myValue = host + &quot;: &quot; + array1[i]; 
+        diffVersions.push(myValue);
+        }
+        if(myAnswer == &quot;vpdiff&quot;) {
+        var myValue = host + &quot;: &quot; + array1[i]; 
+        diffPathAndVersion.push(myValue);
+        }
+        if(myAnswer == &quot;pdiff&quot;) {
+        var myValue = host + &quot;: &quot; + array1[i]; 
+        diffPaths.push(myValue);
+        }
+        if(myAnswer == &quot;notfound&quot;) {
+        var myValue = host + &quot;: &quot; + array1[i]; 
+        notfound.push(myValue);
+        }
+    }
+}
+
+//array checker function
+function checkarray(arr, uuid, path, version) {
+
+    for (var x = 0; x &lt; arr.length; x++) {
+        var myuuid = arr[x].split(&quot;,&quot;)[0];
+        var mypath = arr[x].split(&quot;,&quot;)[1];
+        var myversion = arr[x].split(&quot;,&quot;)[2];
+        if(myuuid == uuid &amp;&amp; mypath == path &amp;&amp; myversion == version) { 
+            return &quot;same&quot;; }
+        if(myuuid == uuid &amp;&amp; mypath == path &amp;&amp; myversion != version) { 
+            return &quot;vdiff&quot;; }
+        if(myuuid == uuid &amp;&amp; mypath != path &amp;&amp; myversion != version) { 
+            return &quot;vpdiff&quot;; }
+        if(myuuid == uuid &amp;&amp; mypath != path &amp;&amp; myversion == version) { 
+            return &quot;pdiff&quot;; }
+    }
+    return &quot;notfound&quot;;
+}
+   </script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="9e619ffd-1663-4b6d-aff5-cc64844f73ff">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="791966d4-49bb-4955-ac2e-fa79d05f459b">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="cb6003b6-3ae9-4230-a17e-f75e0e22b480">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="5d0988dc-b3e6-40cc-9f14-f308bdbc2b28">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

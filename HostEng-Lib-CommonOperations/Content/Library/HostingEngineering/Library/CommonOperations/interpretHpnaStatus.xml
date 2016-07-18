@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="fc6a4718-230d-4da9-82e1-8e0ab0f68db7">
+  <descriptionCdata><![CDATA[fc6a4718-230d-4da9-82e1-8e0ab0f68db7.description=<pre>Operator to interpret HPNA task status.\n\nInputs\:  \nstatusCode \: task status code (show_task XPATH Query /Envelope/Body/show_taskResponse/Result/ResultSet/Row/status/text())\n\nResponses\:\nfailure\: unhandled status code\nStop\: reached a final status\nContinue\: status indicates that taks is not yet finished\n\nResult\:  String that represents the status.
+]]></descriptionCdata>
+  <annotation>fc6a4718-230d-4da9-82e1-8e0ab0f68db7.description</annotation>
+  <name>interpretHpnaStatus</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="48022116-dfb4-4fca-b54e-ac7311596f2e">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>statusCode</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <scriptlet id="dc3de777-ed3e-4816-bd68-7cf4e91090c6">
+    <annotation></annotation>
+    <name>Operation:interpretHpnaStatus (fc6a4718-230d-4da9-82e1-8e0ab0f68db7)</name>
+    <script>if (statusCode == 1) {
+	scriptletResponse = &quot;Continue&quot;;
+	scriptletResult = &quot;Pending: The task is queued and waiting for its scheduled time.&quot;
+}
+else if (statusCode == 2) {
+	scriptletResponse = &quot;Success&quot;;
+	scriptletResult = &quot;Succeeded: The task succeeded.&quot;
+}
+else if (statusCode == 3) {
+	scriptletResponse = &quot;failure&quot;;
+	scriptletResult = &quot;Failed: The task failed.&quot;
+}
+else if (statusCode == 4) {
+	scriptletResponse = &quot;Continue&quot;;
+	scriptletResult = &quot;Running: The task has started, but has not yet finished.&quot;
+}
+else if (statusCode == 5) {
+	scriptletResponse = &quot;failure&quot;;
+	scriptletResult = &quot;Paused: Someone paused the task. It will not run when its scheduled time arrives.&quot;
+}
+else if (statusCode == 6) {
+	scriptletResponse = &quot;failure&quot;;
+	scriptletResult = &quot;Draft: NA will not run the task, nor is the task sent out for approval, when in Draft status. &quot;
+}
+else if (statusCode == 7) {
+	scriptletResponse = &quot;Continue&quot;;
+	scriptletResult = &quot;Waiting: Although the scheduled time has arrived, the task is waiting because the &#8220;Max Concurrent Tasks&#8221; limit has been reached.&quot;
+}
+else if (statusCode == 8) {
+	scriptletResponse = &quot;failure&quot;;
+	scriptletResult = &quot;Syncronous: Task is blocking, this should not be possible.&quot;
+}
+else if (statusCode == 9) {
+	scriptletResponse = &quot;Success&quot;;
+	scriptletResult = &quot;Duplicate: The task was not started because an identical task is already running.&quot;
+}
+else if (statusCode == 10) {
+	scriptletResponse = &quot;failure&quot;;
+	scriptletResult = &quot;Prototype: (you shouldn&apos;t see this).&quot;
+}
+else if (statusCode == 11) {
+	scriptletResponse = &quot;failure&quot;;
+	scriptletResult = &quot;Skipped: The task was skipped due to errors, for example incorrect permissions, unmanaged devices, and so on.&quot;
+}
+else if (statusCode == 12) {
+	scriptletResponse = &quot;failure&quot;;
+	scriptletResult = &quot;Warning: A group task containing some failed sub-tasks, but not all tasks failed. &quot;
+}
+else if (statusCode == 13) {
+	scriptletResponse = &quot;Continue&quot;;
+	scriptletResult = &quot;Requested: The task has been requested.&quot;
+}
+else if (statusCode == 14) {
+	scriptletResponse = &quot;failure&quot;;
+	scriptletResult = &quot;Template: The task is a template (you shouldn&apos;t see this).&quot;
+}
+else  {
+	scriptletResponse = &quot;failure&quot;;
+	scriptletResult = &quot;Unknown: Received a status code that I cannot interpret.&quot;
+}	</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="b226af51-9133-4a00-99cd-cd3917a0b40d">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="73bd5592-ec6c-4c1d-8d26-5398b4aad461">
+      <annotation></annotation>
+      <name>Success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules>
+        <expression id="b8ef1067-f2c2-4e4b-b4b5-926767548b16">
+          <annotation></annotation>
+          <name>Field 1</name>
+          <fieldName>Field_1</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="403cd22f-7191-4e49-aa6a-c6c4847f27b0">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>Success</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+    <opResponse id="460cf80e-ee8b-456b-a40e-17b9d48ec0ec">
+      <annotation></annotation>
+      <name>Continue</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>NO_ACTION_TAKEN</type>
+      <matchRules>
+        <expression id="240b0638-aedc-4b49-87ee-4fa0b4a06155">
+          <annotation></annotation>
+          <name>Field 1</name>
+          <fieldName>Field_1</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="8bd4dfd9-b411-43f1-bf79-6eeb62e710a2">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>Continue</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="83369abb-c033-4f40-8785-ab2820478577">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="d33678eb-2f45-47cc-a03f-34f62fc60d75">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

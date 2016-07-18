@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="e4541e49-ad26-42ca-bb11-3fa6c6bf6af2">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>parseXmlForRebuildInputVars</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="5ab5b197-f0b9-43b9-999b-f355164b1f9c">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>xml</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="d6cca33b-7ce0-449b-9dde-f20bfb73f9a0">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${xml}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="a2f53c1b-6531-4d2a-b18c-587d8f28d862">
+    <annotation></annotation>
+    <name>Operation:parseXmlForRebuildInputVars (e4541e49-ad26-42ca-bb11-3fa6c6bf6af2)</name>
+    <script>try { 
+    var StringReader = java.io.StringReader;
+    var StringWriter = java.io.StringWriter;
+    var XPathConstants = javax.xml.xpath.XPathConstants;
+    var XPathFactory =  javax.xml.xpath.XPathFactory;
+    var ArrayList = java.util.ArrayList;
+    var documentBuilderFactory = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+    var documentBuilder = documentBuilderFactory.newDocumentBuilder();
+    var myXml = new StringReader(xml);
+    var document = documentBuilder.parse(new org.xml.sax.InputSource(myXml));
+    var xpath = XPathFactory.newInstance().newXPath();
+    var nodeList = xpath.evaluate(&quot;/results/attributes-list/vserver-info[starts-with(vserver-name,&apos;usstls7-001-ntap&apos;)]&quot;, document, XPathConstants.STRING);
+//    var blah = null;
+//   for (var i = 0; i &lt; nodeList.getLength(); i++) {
+//           blah += nodeList.item(i).toString();
+//           }
+    scriptletResult = nodeList;
+    scriptletResponse = &quot;success&quot;;
+     }
+catch(err) {
+    scriptletResult = err.message;
+    scriptletResponse = &quot;failure&quot;;
+    }
+
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="b350109d-9edc-42b9-a152-351f146e9673">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="5cf434c1-82ff-41b0-94c1-d254a5f2f3fa">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="210e15bf-d4ff-42f1-9f81-6bd5ac161cca">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="ffa6f6c4-e0fc-400c-8057-2452a66e86f7">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="c255e1c5-e4e8-46ab-981a-a3be5c987461">
+  <descriptionCdata><![CDATA[c255e1c5-e4e8-46ab-981a-a3be5c987461.description=<pre>Creates a URL encoding all the parameters\n \nInputs\:\nbaseUrl - The starting URL\nparameters - A Java properties file formatted list of variable names and corresponding value.\nIf a parameter name ends with .noEscape then the formatter will not attempt to escape the value.\n\nResponses\:\nsuccess - Everything worked.\nfailure - Something went wrong.\n\n</pre>
+]]></descriptionCdata>
+  <annotation>c255e1c5-e4e8-46ab-981a-a3be5c987461.description</annotation>
+  <name>UrlFormatter</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="35185a12-06d8-4933-ad25-e495e1f441bf">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>baseUrl</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="7db9ee14-e1dd-4c03-b9c4-12d24e6a7d6b">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>parameters</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <scriptlet id="a07647bd-526b-4650-b4b7-237c6a024abb">
+    <annotation></annotation>
+    <name>Operation:UrlFormatter (e903195a-7e64-4c3d-b65d-81e612c282de)</name>
+    <script>scriptletResponse = &quot;failure&quot;;
+var properties = new java.util.Properties();
+properties.load(new java.io.StringReader(parameters));
+var buffer = new java.lang.StringBuilder();
+var iter =  properties.keySet().iterator();
+while (iter.hasNext()) {
+    var noEscape = false;
+    var name = iter.next();
+    var value = properties.get(name);
+    if(value == &quot;__SMA_NO_PASS&quot;) {
+       continue;
+    }
+    if (name.endsWith(&quot;.noEscape&quot;))
+    {
+        name = name.substring(0, name.lastIndexOf(&apos;.&apos;));
+        noEscape = true;
+    }
+    if (value != null)
+    {
+        value = value.trim();
+    }
+    var notEmpty = ((value != null) &amp;&amp; (value.length() &gt; 0));
+    if (buffer.length() &gt; 0) {
+        buffer.append(&apos;&amp;&apos;);
+    }
+    buffer.append(java.net.URLEncoder.encode(name)).append(&apos;=&apos;);
+    if (notEmpty)
+    {
+        buffer.append(noEscape? value: java.net.URLEncoder.encode(value));
+    }
+}
+buffer.insert(0, &apos;?&apos;);
+buffer.insert(0, baseUrl);
+scriptletResult = buffer.toString();
+scriptletResponse = &quot;success&quot;;
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="233d72fd-7f63-4448-beb2-18c724e6777f">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="f5931eaf-b2dc-44c2-b188-0dbc01268ca6">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="bbd2164a-9cf1-41c5-9b21-9419d4b62849">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="e6ff345d-76c4-4fce-b113-7ac58e1719f4">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

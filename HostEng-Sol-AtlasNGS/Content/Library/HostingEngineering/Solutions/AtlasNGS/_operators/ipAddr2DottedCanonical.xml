@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="28e8af0c-5332-4472-9a80-971ddf1eeff5">
+  <descriptionCdata><![CDATA[28e8af0c-5332-4472-9a80-971ddf1eeff5.description=<pre>\n\nSynopsis\n\n    This operator executes a command from the command line of a remote action server (RAS).\n\nInputs\n\n    ipAddress - The IP address of the LIF (required).\n    netMask - The net mask of the IP address (required).\n    command - The command to execute.\n    pyLibPath - \n    arguments - Any variables (data) to use in the command.\n    environment - Specifies environment variables/values that need to be defined when running the command.\n    path - The path to the command's executable file.\n      Valid values\: Implementation-specific.\n      Default value\: None.\n\n     cmd_timeout - Timeout in milliseconds before the command is considered failed when returnImmediately is false.\n       Valid values\: Positive number miliseconds.\n       Default value\: 100000 (100 seconds).\n\n    returnImmediately - If true, the operation will execute the command and return immediately.  It will not wait for the command to finish.\n       Valid values\: true, false.\n       Default value\: false.\n\nResults\n\n    STDOUT - The standard output of the command.\n    STDERR - The standard error output of the command.\n\nResponses\n\n    Success - All operations and subflows completed successfully.\n    Failure - Some operations and/or subflows failed.\n\nNotes\n\n    1. On unix we cannot mandate what type of shell to be used (sh, bash, ksh, csh, etc), so be sure to include the shell in your command\n         if you need things like file redirection.\n           Example\:\n           sh -c "ls -lha /etc > /tmp/myfile"\n    2. On Windows, this command will prepend cmd.exe /C or command.exe /C to the command you specify, so there is no need to pass that into this operation.\n\n</pre>
+]]></descriptionCdata>
+  <annotation>28e8af0c-5332-4472-9a80-971ddf1eeff5.description</annotation>
+  <name>ipAddr2DottedCanonical</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="d600805c-6de7-4de0-b128-d3ff081411dc">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>ipAddress</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="fc7ab9b1-e6c6-4c7a-9f04-74c0ea1c4915">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>command</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>python</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="5c646c89-6677-41d7-bbb0-56c06287dfd3">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>pyLibPath</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="42404fa5-746b-424b-a1ef-f348b4896e03">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>arguments</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value> -c &quot;import sys; sys.path.append(&apos;${pyLibPath}&apos;); from IPy import IP ; print(IP(&apos;${ipAddress}&apos;))&quot;</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="ad749dac-3854-485b-8089-a08b66731e53">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>environment</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="cf6c85f5-02d2-414a-9c71-127dc311eecb">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>path</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>/usr/bin</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="8e8b4860-c4b4-4c9b-8d39-f4e45b24f32c">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>cmd_timeout</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>300000</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="06ee76fa-93cc-469c-beda-009781e1842e">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>returnImmediately</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>false</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <possibleResponses>
+    <opResponse id="730f40cf-6eac-43db-b4b5-9aaa1ed756a8">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules>
+        <expression id="99d1a3c9-f882-413b-adfa-e0c3d4c5edfe">
+          <annotation></annotation>
+          <name></name>
+          <fieldName>returnCode</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="f2e246c8-f480-47e3-af70-1556d1a32ba7">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>0</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+    <opResponse id="f97519ef-c8c3-46d6-903a-fb96c6e010ce">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules>
+        <expression id="979b6feb-abd7-4351-942c-75484ee1dff7">
+          <annotation></annotation>
+          <name></name>
+          <fieldName>returnCode</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="60592114-f6a6-4ed7-9ce3-4d04992df0e5">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>-1</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions>
+    <expression id="6d7f6b60-350f-4469-a6ca-aacba4f7039b">
+      <annotation></annotation>
+      <name>ipAddr</name>
+      <fieldName>STDOUT</fieldName>
+      <sourceType>RAWRESULT</sourceType>
+      <filters>
+        <stripWhitespaceFilter id="cd1e2b32-9b3f-44c7-a7a5-2aaa4fad8c96">
+          <annotation></annotation>
+          <name>Strip Whitespace</name>
+        </stripWhitespaceFilter>
+      </filters>
+    </expression>
+    <expression id="481816cf-3d01-419f-93d2-17ae4ae6b11a">
+      <annotation></annotation>
+      <name>stderr</name>
+      <fieldName>STDERR</fieldName>
+      <sourceType>RAWRESULT</sourceType>
+      <filters/>
+    </expression>
+  </availableResultExpressions>
+  <resultExpression id="05fef0c3-2a4a-48b7-aecf-6140cc8a8239">
+    <annotation></annotation>
+    <name></name>
+    <fieldName>STDOUT</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="12f0e270-54b6-42de-b7ae-0212fd4603cf">
+    <baseIcon>wrench2.png</baseIcon>
+    <basePath>/Utilities/</basePath>
+    <readOnly>false</readOnly>
+    <layers>
+      <iconSpec id="0f09621f-2695-466a-8cc2-3ff945fcbd6b">
+        <baseIcon>Calculator.png</baseIcon>
+        <basePath>/Annotations/</basePath>
+        <readOnly>false</readOnly>
+        <layers/>
+      </iconSpec>
+    </layers>
+  </iconSpec>
+  <opRef>
+    <refId>83f5483f-8b4f-42c3-bfbb-b68a8d320fb3</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+  <overrideGroupAlias>${overrideJRAS}</overrideGroupAlias>
+</operation>

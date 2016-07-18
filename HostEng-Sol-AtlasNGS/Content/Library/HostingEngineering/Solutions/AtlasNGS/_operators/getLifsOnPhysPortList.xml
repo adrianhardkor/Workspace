@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="3abffb0a-a579-4206-bebd-ada18ae5ec9c">
+  <descriptionCdata><![CDATA[3abffb0a-a579-4206-bebd-ada18ae5ec9c.description=<pre>\nSynopsis\n\n    This operator checks for valid IP address formats.\n\nInputs\n\n    physPort - The actual port assigned to a LIF.\n    physPortList - A list of physical ports to validate.\n    lifPortList - A list of ports assigned to a LIF.\n    fgExcludePortList - A list of ports to exclude from the check.\n      Valid values\: Implementation-specific.\n      Default value\: None.\n\nResults\n\n    hpooFlowResult - The XML response specific to the functionality of the flow; in this case, valid IP address formats.\n    flowStatus - Overall status of the flow, value is one of the string literals "success" or "failed".\n\nResponses\n\n    Success - All operations and subflows completed successfully All variables have a valid IP format.\n    Failure - Some operations and/or subflows failed. One or more variables is null or has an invalid IP format.\n\nNotes\n\n    1. Anything else the caller or support person may need to know about the flow. Relationships that aren't easily inferred, abmnormal flow behaviors, hard-codings, etc.\n\n</pre>
+]]></descriptionCdata>
+  <annotation>3abffb0a-a579-4206-bebd-ada18ae5ec9c.description</annotation>
+  <name>getLifsOnPhysPortList</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="6adfc64b-2c18-4c51-bbad-21568e93dc57">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>physPortList</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="385dfe25-3f35-4b55-86c5-cb2933b2d430">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>lifPortList</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="035dcdb6-a692-414c-aa8b-d68177dc4aa8">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>fgExcludePortList</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="1dd44c75-1a56-4789-acb9-55a1a10173e7">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_3</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${fgExcludePortList}</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="128f6b04-d4d7-464b-8f23-0c13813cc227">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${physPortList}</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="ee1e33e4-91f3-4333-99b8-a0146ac4a9cf">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_2</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${lifPortList}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="345eff23-e1ae-4373-be84-fddd7b8ace2d">
+    <annotation></annotation>
+    <name>Operation:getLifsOnPhysPortList (3abffb0a-a579-4206-bebd-ada18ae5ec9c)</name>
+    <script>var jsPhysPortList = physPortList.split(&quot;,&quot;);
+var jsLifPortList = lifPortList.split(&quot;,&quot;);
+var jsFgExcludePortList = fgExcludePortList.split(&quot;,&quot;);
+var portMatchedList = new Array();
+
+var nlifOnPort;
+var i, j;
+
+
+for (i = 0; i &lt; jsFgExcludePortList.length; i++)
+{
+    if ((j = jsPhysPortList.indexOf(jsFgExcludePortList[i])) != -1)
+    {
+        jsPhysPortList.splice(j, 1);
+    }
+}
+
+for (i = 0; i &lt; jsPhysPortList.length; i++)
+{
+    for (j = 0, nlifOnPort = 0; j &lt; jsLifPortList.length; j++)
+    {
+        if (jsPhysPortList[i] == jsLifPortList[j].substr(0, jsLifPortList[j].indexOf(&quot;-&quot;)))
+        {
+            nlifOnPort++;
+        }
+    }
+    portMatchedList.push(jsPhysPortList[i] + &quot;/&quot; + nlifOnPort);
+}
+
+
+scriptletResponse = &quot;success&quot;; 
+scriptletResult = portMatchedList.join(&quot;,&quot;);
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="c01631c9-9085-42a3-9581-17014235c6cf">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="05e1ad76-9c96-415a-a449-3281f1dc161d">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="8a6ed762-7b94-476c-93e5-7afef93c57e1">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_2</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="672bbf98-b36e-4e64-9940-d0686c66a3f0">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers>
+      <iconSpec id="debe099d-5358-4a48-8486-dae060fc7d90">
+        <baseIcon>send.png</baseIcon>
+        <basePath>/Annotations/</basePath>
+        <readOnly>false</readOnly>
+        <layers/>
+      </iconSpec>
+    </layers>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

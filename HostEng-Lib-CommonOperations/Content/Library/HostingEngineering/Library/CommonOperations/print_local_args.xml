@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="b9dbaf84-2dfb-45b5-bc0a-5069a274ebe2">
+  <descriptionCdata><![CDATA[b9dbaf84-2dfb-45b5-bc0a-5069a274ebe2.description=<pre>\n\nScriptlet that grabs all keys and out puts only keys that have Local values.  This is to emulate an ARGV type functionality.\n\nWill only provide inputs of direct flow calling this operation.\n\nInternal variables that can be potentially disregaurded\: (example was runCLU)\nusername\nexecution_thread_id\nRS_Previous_Transition\nwebserviceHost\nerrorDetails\nResult\nRS_Previous_Response\npassword\nflowUuid\nwebservicePort\n\n</pre>
+]]></descriptionCdata>
+  <annotation>b9dbaf84-2dfb-45b5-bc0a-5069a274ebe2.description</annotation>
+  <name>print_local_args</name>
+  <categories/>
+  <inputs/>
+  <scriptlet id="38e3f342-bdbc-4716-afe8-62f9ffbc4558">
+    <annotation></annotation>
+    <name>Operation:print_local_args (b9dbaf84-2dfb-45b5-bc0a-5069a274ebe2)</name>
+    <script>
+var keys = String(scriptletContext.keySet()).replace(&quot;[&quot;,&quot;&quot;,&quot;g&quot;).replace(&quot;]&quot;,&quot;&quot;,&quot;g&quot;).replace(&quot;, &quot;,&quot;,&quot;,&quot;g&quot;).split(&quot;,&quot;);
+var locals = [];
+var globals = [];
+for (var i = 0; i &lt; keys.length; i++) {
+	if (scriptletContext.getLocal(keys[i]) == null || scriptletContext.getLocal(keys[i]) == &quot;&quot; || typeof scriptletContext.getLocal(keys[i]) == &quot;undefined&quot; ) {
+	    globals.push(keys[i]);
+	    } else {
+        locals.push(keys[i]);
+		}
+}
+
+scriptletResult = locals.join(&quot;,&quot;);
+scriptletResponse = &quot;success&quot;;
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="ad12b3bb-3a48-4f0c-b7d3-e78409cacc69">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="06fa50cb-d45c-4e18-8f0a-7f02ef8c7edf">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="fc042cb5-57c7-453b-8e96-da13db3e5328">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="a71fd634-30c1-4133-94e4-fa79bba25394">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

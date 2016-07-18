@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="baf1fc14-6d56-40d2-b585-3d2c99826e25">
+  <descriptionCdata><![CDATA[baf1fc14-6d56-40d2-b585-3d2c99826e25.description=<pre>Operation to check for variables whose values are \=\= "true"\n\nInputs\:\n\ninputList\:  comma seperated list of variables to check\n\nReponsses\:\nsuccess\:  at least one variable with value of string "true"\nfail\:  no vars with a value of string "true"\n\nResult\:  List of variables that have value of sting "true"\n\n</pre>
+]]></descriptionCdata>
+  <annotation>baf1fc14-6d56-40d2-b585-3d2c99826e25.description</annotation>
+  <name>checkForTrue</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="ab8e8a61-d51d-42de-b59e-f882485946e0">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>inputList</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="ede85828-b8d2-4020-b351-fb600b0f0f40">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${inputList}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="2f3a7ea3-bc90-4da5-a3c2-7ed0942b3d5f">
+    <annotation></annotation>
+    <name>Operation:checkForTrue (baf1fc14-6d56-40d2-b585-3d2c99826e25)</name>
+    <script>var myInputs = inputList.split(&quot;,&quot;);
+var myTrueResult = &quot;&quot;;
+for (var i = 0; i &lt; myInputs.length; i++) {
+	if (scriptletContext.get(myInputs[i]) == &quot;true&quot;)
+		myTrueResult += myInputs[i] + &quot;,&quot;;
+}
+
+if (myTrueResult.length &gt; 0) {
+	scriptletResponse = &quot;success&quot;; 
+	scriptletResult = myTrueResult;}
+else
+	scriptletResponse = &quot;fail&quot;;
+		
+function trim(value){
+var s = &quot;&quot;+value;
+s.replace(/^\s*|\s*$/g, &quot;&quot;)
+return s;
+}</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="637b8241-664b-42f5-bacf-f3a9de63ff1d">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="b3ebd188-03f1-4274-8633-5de6c62e4092">
+      <annotation></annotation>
+      <name>fail</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="eb7ccbc6-7a7c-4f29-a4f6-78fe078005b7">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="4d3a856c-cba4-42f2-8974-5f853d2871d1">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="30bad656-7507-4cb0-938a-4e59f013aec8">
+  <descriptionCdata><![CDATA[30bad656-7507-4cb0-938a-4e59f013aec8.description=<pre>Operation to check for valid IP address formats.\n\nInputs\:\n\ninputList\:  comma seperated list of variables to check\n\nReponsses\:\ninvalid\:  at least one variable is null or has invalid IP format\nvalid\:  all variables have a valid IP formatted value\n\nResult\:  List of variables that are null or invalid\n\n</pre>
+]]></descriptionCdata>
+  <annotation>30bad656-7507-4cb0-938a-4e59f013aec8.description</annotation>
+  <name>checkForValidXmlWwns</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="25bc0837-906a-4ce1-92eb-556d444f0c95">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>inputList</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="c954a5c4-5345-4cf6-af6c-0fa87c5d3fa9">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${inputList}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="9e8ab67d-477a-42c9-91d6-c8d7e4f31a4b">
+    <annotation></annotation>
+    <name>Operation:checkForValidXmlWwns (30bad656-7507-4cb0-938a-4e59f013aec8)</name>
+    <script>var myValues = scriptletContext.get(inputList);
+var mySplitValues = myValues.split(&quot;,&quot;);
+var myInvalidResult = &quot;&quot;;
+for (var i = 0; i &lt; mySplitValues.length; i++) {
+	if (mySplitValues[i] == null || trim(mySplitValues[i])==&quot;&quot;)
+		myInvalidResult += mySplitValues[i] + &quot; is Null\n&quot;;
+    else if (!(mySplitValues[i].match(/^[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]$/)))
+        myInvalidResult += mySplitValues[i] + &quot; is invalid\n&quot;    
+}
+
+if (myInvalidResult.length &gt; 0) {
+	scriptletResponse = &quot;invalid&quot;; 
+	scriptletResult = myInvalidResult;}
+else
+	scriptletResponse = &quot;valid&quot;;
+		
+function trim(value){
+var s = &quot;&quot;+value;
+s.replace(/^\s*|\s*$/g, &quot;&quot;)
+return s;
+}</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="fd0a17a8-861f-4be9-abc1-ec165edddd04">
+      <annotation></annotation>
+      <name>valid</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="9234ac88-c67b-4860-9046-1564149b1cb1">
+      <annotation></annotation>
+      <name>invalid</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="26626e9e-d7a9-4374-889d-1f57a49c0ac7">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="0175560c-bee0-4e76-9b28-fef891bf24f5">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

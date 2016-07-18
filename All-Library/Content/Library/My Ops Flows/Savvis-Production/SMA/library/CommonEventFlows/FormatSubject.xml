@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="b89074da-6ebb-4842-b4ff-96cb4ede5440">
+  <descriptionCdata><![CDATA[b89074da-6ebb-4842-b4ff-96cb4ede5440.description=<pre>Formats the event values to form a subject.\n\nInputs\:\nxml - xml with trap information. This is the Alert XML format described in the CreateTicket flow\nsubject - Subject for the vantive event and can contain tokens like ${CMDBName} , ${Summary}\n\nOutputs\:\nsubject - Returns a subject with the tokens replaced.\n\nResponses\:\nsuccess - If everything went fine.\nfailure - If something went wrong.\n\n</pre>
+]]></descriptionCdata>
+  <annotation>b89074da-6ebb-4842-b4ff-96cb4ede5440.description</annotation>
+  <name>FormatSubject</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="b35aa72c-f514-4007-a949-0d3c95a20ee3">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>xml</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="837c25f5-1d70-4c61-a427-5ab2fa3f78d0">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>subject</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <scriptlet id="3f057b00-dc22-4e19-a276-9c792fefcca3">
+    <annotation></annotation>
+    <name>Operation:FormatSubject (b89074da-6ebb-4842-b4ff-96cb4ede5440)</name>
+    <script>scriptletResponse = &quot;failure&quot;;
+var documentBuilderFactory = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+documentBuilderFactory.setIgnoringComments(true);
+documentBuilderFactory.setCoalescing(true);
+documentBuilderFactory.setIgnoringElementContentWhitespace(true);
+var documentBuilder = documentBuilderFactory.newDocumentBuilder();
+var document = documentBuilder.parse(new org.xml.sax.InputSource(new java.io.StringReader(xml)));
+var xpath = javax.xml.xpath.XPathFactory.newInstance().newXPath();
+
+var pattern = java.util.regex.Pattern.compile(&quot;\\$\\{(.+?)\\}&quot;);
+var matcher = pattern.matcher(subject);
+var buffer = new java.lang.StringBuffer();
+while (matcher.find()) {
+  try {
+    var value = xpath.evaluate(&quot;//column[@name=&apos;&quot; + matcher.group(1) + &quot;&apos;]&quot;, document, javax.xml.xpath.XPathConstants.STRING);
+      if (value != null) {
+        matcher.appendReplacement(buffer, &quot;&quot;);
+        buffer.append(value);
+    } else {
+        matcher.appendReplacement(buffer, &quot;&quot;);
+        buffer.append(&quot;_OO_FormatSubject_VALNOTFOUND_&quot;);
+    }
+  } catch (e) {
+          matcher.appendReplacement(buffer, &quot;&quot;);
+        buffer.append(&quot;_OO_FormatSubject_VALNOTFOUND_EXCEPTION_&quot;);
+   }
+}
+matcher.appendTail(buffer);
+scriptletResponse = &quot;success&quot;;
+scriptletResult = buffer.toString();</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="cc3de1ff-b56d-4dc8-a86b-1a4c44dfcff5">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="2e0717a1-99aa-45d9-b9d0-8b067e37021f">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions>
+    <expression id="e714beb1-68e1-41ee-8bf1-9f9a8505ff81">
+      <annotation></annotation>
+      <name>subject</name>
+      <fieldName>Field_1</fieldName>
+      <sourceType>RAWRESULT</sourceType>
+      <filters/>
+    </expression>
+  </availableResultExpressions>
+  <resultExpression id="88f4c29e-ee69-4c8c-b9cf-b83d4968ae09">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="7846b09d-b335-4b47-8123-b7e56237d282">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

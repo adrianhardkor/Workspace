@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="3d46ec85-74b0-469b-b510-a540ad62ac6f">
+  <descriptionCdata><![CDATA[3d46ec85-74b0-469b-b510-a540ad62ac6f.29a76e06-f5a8-497a-baf2-d0c6e20f6158.prompt=a@b.com
+3d46ec85-74b0-469b-b510-a540ad62ac6f.description=<pre>This operation validates email address is in correct format.\n\nInputs\:\nemailAddress - email address\n\nResponses\:\nsuccess - If everything went fine.\nfailure - If something went wrong.\n\n</pre>
+]]></descriptionCdata>
+  <annotation>3d46ec85-74b0-469b-b510-a540ad62ac6f.description</annotation>
+  <name>ValidateEmailAddress</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="29a76e06-f5a8-497a-baf2-d0c6e20f6158">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>emailAddress</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt>3d46ec85-74b0-469b-b510-a540ad62ac6f.29a76e06-f5a8-497a-baf2-d0c6e20f6158.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <scriptlet id="78962e31-68fc-449e-93f8-d47484153e47">
+    <annotation></annotation>
+    <name>Operation:ValidateEmailAddress (3d46ec85-74b0-469b-b510-a540ad62ac6f)</name>
+    <script>function verifyAddress(emailaddr) {
+    if(scriptletResponse==&quot;success&quot;) {
+        for (var index =0; index&lt;emailaddr.length; index++) {
+    	    var  c = emailaddr.charCodeAt(index);
+    	    if(c&gt;127) {
+    		    scriptletResponse=&quot;failure&quot;;
+    		    break;
+    	    }
+        }
+    }
+
+    if(scriptletResponse==&quot;success&quot;) {
+    	var re=/\s|\?|=|,|;|\(|\)|\[|\]|&amp;|\.\.|\*|&apos;/;
+    	if( re.test(emailaddr)) {
+    		scriptletResponse=&quot;failure&quot;;
+    	}
+    }
+
+    if(scriptletResponse==&quot;success&quot;) {
+	    var re=/.+@.+\.\w{2,6}/
+	    if( ! re.test(emailaddr)) {
+    		scriptletResponse=&quot;failure&quot;;
+    	}
+    }
+}
+
+// Main Section:
+emailaddrIn = scriptletContext.getLocal(&quot;emailAddress&quot;)
+
+scriptletResponse=&quot;success&quot;;
+
+if(emailaddrIn==null || emailaddrIn==&quot;&quot;) {
+    scriptletResponse=&quot;failure&quot;;
+}
+
+if ( emailaddrIn.indexOf(&apos;,&apos;) != -1) {
+  // Found a comma
+  for (ema in emailaddrIn.split(&apos;,&apos;)) {
+    scriptletResponse = verifyAddress(emailaddrIn.split(&apos;,&apos;)[ema]);
+
+    if(scriptletResponse!=&quot;success&quot;){
+      // Broke
+      break;
+    }
+  }
+} else {
+  // No comma Found
+  scriptletResponse = verifyAddress(emailaddrIn);
+}</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="3e884730-2ad8-4276-b51f-f15a736ad7f5">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules>
+        <expression id="bc992817-af7c-46e0-b4d4-7d433a4690a3">
+          <annotation></annotation>
+          <name>Field 1</name>
+          <fieldName>Field_1</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="13b786b5-a3c3-4dab-abbc-4db4dd0a8565">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>success</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>CONTAINS</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+    <opResponse id="18ecac00-e000-470e-bad4-08d780ba30e8">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>false</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="9239ec22-3a51-4724-894f-39d6ef77685d">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="80073120-f24d-4e36-b057-8542aa31bf1f">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

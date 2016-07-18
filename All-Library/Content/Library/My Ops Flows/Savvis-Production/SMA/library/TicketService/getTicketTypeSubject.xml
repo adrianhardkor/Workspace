@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow id="4aa62a95-cb41-468b-960b-1847eae912a3">
+  <descriptionCdata><![CDATA[4aa62a95-cb41-468b-960b-1847eae912a3.36f637f7-53fa-4d39-9beb-ad82aedd3e2e.description=Verify if the ticketId is valid. It can only be a positive integer.
+4aa62a95-cb41-468b-960b-1847eae912a3.8bc36cd6-9c7b-41ef-9735-00e6f2c904e6.description=Verify the result from the "getTicketByTicketId" web service. Check if the ticketId is found.
+4aa62a95-cb41-468b-960b-1847eae912a3.9e455011-17f3-45a5-9009-4a112759cabe.description=Parse the XML returned by the "getTickeByTicketId" web service.
+4aa62a95-cb41-468b-960b-1847eae912a3.description=Given the ticketId, return the ticket's "caseType" and "caseSubject"\n\nInput\:\nticketId                   -- case ID\nticketServiceHost   -- ticket service host\nticketServicePort    -- ticket service port\n\nReturn\:\ncaseType      --  case type, if the ticket is found\ncaseSubject  -- case subject, if the ticket is found\nerrorMsg       --  error info, can be the web service exception, or the web service returned invalid XML, or the ticket is not found\n\n\n
+4aa62a95-cb41-468b-960b-1847eae912a3.e2ed8264-21d0-497c-b11f-9b2ab662f6b8.description=Call the web service "getTicketByTicketId", to retrieve the detailed ticket information.
+]]></descriptionCdata>
+  <annotation>4aa62a95-cb41-468b-960b-1847eae912a3.description</annotation>
+  <name>getTicketTypeSubject</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="0f93e497-a0f0-4839-97c5-5524b7469c6c">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>ticketId</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="14f71568-ac30-48ac-b2ef-fbee6e0e40ea">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>ticketServiceHost</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>${SMA_TICKET_SERVICE_HOST}</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="b981b4e1-ba9c-478c-805b-c9cd49bc3b2f">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>ticketServicePort</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>${SMA_TICKET_SERVICE_PORT}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <possibleResponses>
+    <opResponse id="9b961b2a-42e5-49f2-b5b3-b5805ce33ac5">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>false</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="7f54c26d-2a8e-4d74-9e80-86351f356b33">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="c00082f6-be9f-46a7-9f7f-08415cd8e326">
+    <annotation></annotation>
+    <name>FailureMessage</name>
+    <fieldName>FailureMessage</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="9bc68a50-fc98-4efb-9d3e-978e401c0b36">
+    <baseIcon>flow.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <callouts/>
+  <checkPointFlow>true</checkPointFlow>
+  <compatibleRuntimeContext>false</compatibleRuntimeContext>
+  <historyCheckPointFlow>true</historyCheckPointFlow>
+  <steps>
+    <step id="36f637f7-53fa-4d39-9beb-ad82aedd3e2e">
+      <annotation>4aa62a95-cb41-468b-960b-1847eae912a3.36f637f7-53fa-4d39-9beb-ad82aedd3e2e.description</annotation>
+      <name>VerifyTicketId</name>
+      <bounds>
+        <x>38.0</x>
+        <y>94.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <scriptlet id="3d7e0c55-b850-4581-92ab-14f53cc5d78d">
+        <annotation></annotation>
+        <name>Step:VerifyTicketId Flow:getTicketTypeSubject (36f637f7-53fa-4d39-9beb-ad82aedd3e2e)</name>
+        <script>myTicketId = new String(ticketId);
+
+if( ! myTicketId.match(/^\d+$/) || myTicketId&lt;=0)
+{
+    myErrorMsg = &quot;Invalid ticketId -- &quot; + myTicketId;
+    scriptletContext.put(&quot;errorMsg&quot;, myErrorMsg); 
+    scriptletResponse = &quot;failure&quot;; 
+}
+else
+{
+    scriptletResponse = &quot;success&quot;; 
+}
+</script>
+        <type>RHINO</type>
+      </scriptlet>
+      <bindings>
+        <staticBinding id="2efe45d5-c419-45b4-9c25-8e48dae45655">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>ticketId</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="cd491552-4d66-46de-a125-1426fb607a84">
+          <annotation></annotation>
+          <name>InvalidTicketId</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>9282ad5f-e05a-44ee-9ce5-daf69afed2e6</refId>
+          </destination>
+          <source>
+            <refId>36f637f7-53fa-4d39-9beb-ad82aedd3e2e</refId>
+          </source>
+          <positions>
+            <point>
+              <x>180.0</x>
+              <y>132.0</y>
+            </point>
+            <point>
+              <x>468.0</x>
+              <y>374.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="3427e046-4cb2-46d0-aea1-8c12f39d3b91">
+          <annotation></annotation>
+          <name>TicketId Validated</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>e2ed8264-21d0-497c-b11f-9b2ab662f6b8</refId>
+          </destination>
+          <source>
+            <refId>36f637f7-53fa-4d39-9beb-ad82aedd3e2e</refId>
+          </source>
+          <positions>
+            <point>
+              <x>180.0</x>
+              <y>132.0</y>
+            </point>
+            <point>
+              <x>319.0</x>
+              <y>125.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>520.077839964152</x>
+            <y>1.4227192118125938</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>81325f8d-d46d-4838-af89-e7cbf43aa9c1</refId>
+      </opRef>
+      <assignments/>
+      <throttleSize>0</throttleSize>
+    </step>
+    <step id="e2ed8264-21d0-497c-b11f-9b2ab662f6b8">
+      <annotation>4aa62a95-cb41-468b-960b-1847eae912a3.e2ed8264-21d0-497c-b11f-9b2ab662f6b8.description</annotation>
+      <name>getTicketByTicketId</name>
+      <bounds>
+        <x>203.0</x>
+        <y>98.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <scriptlet id="880084f5-49fe-4127-bbd9-b349e2f67e5b">
+        <annotation></annotation>
+        <name>Step:getTicketByTicketId Flow:getTicketTypeSubject (e2ed8264-21d0-497c-b11f-9b2ab662f6b8)</name>
+        <script>scriptletContext.put(&quot;errorMsg&quot;,&quot;WS exception -- getTicketByTicketId&quot;); </script>
+        <type>RHINO</type>
+      </scriptlet>
+      <bindings>
+        <staticBinding id="c20221c0-dcdf-4db4-8576-4da48e586d46">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>ticketId</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="c2a2f19c-e101-4237-81e9-298304edca8e">
+          <annotation></annotation>
+          <fromContextKey>ticketServiceHost</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>host</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_SERVICE_HOST}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="a5c24fe5-13d3-4f3d-9183-67a1f3c73922">
+          <annotation></annotation>
+          <fromContextKey>ticketServicePort</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>port</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_SERVICE_PORT}</value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="a6254a26-3875-4884-98dd-b85e671248c0">
+          <annotation></annotation>
+          <name>WebServiceException</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>9282ad5f-e05a-44ee-9ce5-daf69afed2e6</refId>
+          </destination>
+          <source>
+            <refId>e2ed8264-21d0-497c-b11f-9b2ab662f6b8</refId>
+          </source>
+          <positions>
+            <point>
+              <x>319.0</x>
+              <y>125.0</y>
+            </point>
+            <point>
+              <x>324.0</x>
+              <y>255.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="1cc39950-24ac-45b9-8fc9-bf0375c6d8d5">
+          <annotation></annotation>
+          <name>WS succeedded</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>9e455011-17f3-45a5-9009-4a112759cabe</refId>
+          </destination>
+          <source>
+            <refId>e2ed8264-21d0-497c-b11f-9b2ab662f6b8</refId>
+          </source>
+          <positions>
+            <point>
+              <x>319.0</x>
+              <y>125.0</y>
+            </point>
+            <point>
+              <x>431.0</x>
+              <y>221.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>05b0422c-472a-4128-9b89-467cfbffdb73</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="ba08ab37-ebf9-4ee4-bde8-f5bd25e84ae0">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>ticketXML</contextKey>
+          <expression id="1f3de788-c95d-4926-9f76-2c17ddbfd02e">
+            <annotation></annotation>
+            <name>Result Field: document</name>
+            <fieldName>document</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="9282ad5f-e05a-44ee-9ce5-daf69afed2e6">
+      <annotation></annotation>
+      <name>Error : failure</name>
+      <bounds>
+        <x>418.0</x>
+        <y>340.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="12a4e5be-e0e5-4313-99a4-5da99e480a28">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>errorMsg</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="6f72a0e5-78e0-403a-a892-3b64b370517e">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>9282ad5f-e05a-44ee-9ce5-daf69afed2e6</refId>
+          </destination>
+          <source>
+            <refId>9282ad5f-e05a-44ee-9ce5-daf69afed2e6</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>ERROR</returnStepType>
+      <assignments>
+        <flowVariableAssignment id="17d69fae-f8ab-4869-8011-873bf0b9a593">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>errorMsg</contextKey>
+          <expression id="dfe18030-1d56-4e14-ae6f-a3257a1cc425">
+            <annotation></annotation>
+            <name>Input: errorMsg</name>
+            <fieldName>errorMsg</fieldName>
+            <sourceType>INPUT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+    </returnStep>
+    <step id="8bc36cd6-9c7b-41ef-9735-00e6f2c904e6">
+      <annotation>4aa62a95-cb41-468b-960b-1847eae912a3.8bc36cd6-9c7b-41ef-9735-00e6f2c904e6.description</annotation>
+      <name>VerifyTicketType&amp;Subject</name>
+      <bounds>
+        <x>626.0</x>
+        <y>94.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <scriptlet id="f14f7fbe-eb72-4b60-9d8d-3d539fe613d4">
+        <annotation></annotation>
+        <name>Step:VerifyTicketType&amp;Subject Flow:getTicketTypeSubject (8bc36cd6-9c7b-41ef-9735-00e6f2c904e6)</name>
+        <script>myCaseType    = caseType;
+myCaseSubject = caseSubject;
+
+
+
+if(myCaseType == null || myCaseType == &quot;undefined&quot; || myCaseType ==&quot;&quot; || 
+   myCaseSubject == null || myCaseSubject == &quot;undefined&quot; || myCaseSubject ==&quot;&quot; )
+{
+    myCaseId      = scriptletContext.getLocal(&quot;ticketId&quot;);
+    myErrorMsg    = &quot;Ticket &quot; + myCaseId + &quot; not found&quot;;
+    scriptletContext.put(&quot;errorMsg&quot;, myErrorMsg);
+    scriptletResponse = &quot;failure&quot;; 
+}
+else
+{
+    scriptletResponse = &quot;success&quot;; 
+}
+</script>
+        <type>RHINO</type>
+      </scriptlet>
+      <bindings>
+        <staticBinding id="d21627a0-6e85-4dfb-b058-e5f9a1277d04">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>caseType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="bb974acb-d0d7-4b10-8d23-639065541ee0">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>caseSubject</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="f3c22e82-6bf8-47c3-99dd-f3f931bc91d1">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>db68ba49-a355-4524-ba29-15431f1b12d5</refId>
+          </destination>
+          <source>
+            <refId>8bc36cd6-9c7b-41ef-9735-00e6f2c904e6</refId>
+          </source>
+          <positions>
+            <point>
+              <x>618.0</x>
+              <y>195.0</y>
+            </point>
+            <point>
+              <x>772.0</x>
+              <y>140.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="3d303fa4-6a1e-443f-b98c-cdb87d7c0735">
+          <annotation></annotation>
+          <name>TicketNotFound</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>9282ad5f-e05a-44ee-9ce5-daf69afed2e6</refId>
+          </destination>
+          <source>
+            <refId>8bc36cd6-9c7b-41ef-9735-00e6f2c904e6</refId>
+          </source>
+          <positions>
+            <point>
+              <x>634.0</x>
+              <y>128.0</y>
+            </point>
+            <point>
+              <x>325.0</x>
+              <y>352.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>81325f8d-d46d-4838-af89-e7cbf43aa9c1</refId>
+      </opRef>
+      <assignments/>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="db68ba49-a355-4524-ba29-15431f1b12d5">
+      <annotation></annotation>
+      <name>Resolved : success</name>
+      <bounds>
+        <x>822.0</x>
+        <y>91.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="62aa5971-1f78-4375-941c-e5f0178552b9">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>caseType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="57ac4d26-aefb-4801-95c2-36b6b047f6cd">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>caseSubject</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="8b238e05-8705-4ceb-9506-f56cc10e4b78">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>db68ba49-a355-4524-ba29-15431f1b12d5</refId>
+          </destination>
+          <source>
+            <refId>db68ba49-a355-4524-ba29-15431f1b12d5</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>RESOLVED</returnStepType>
+      <assignments>
+        <flowVariableAssignment id="9a848eaa-39c2-4a23-bb66-554b2618981e">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>caseType</contextKey>
+          <expression id="0e3172e5-7a8a-45ec-878a-c5877540a301">
+            <annotation></annotation>
+            <name>Input: caseType</name>
+            <fieldName>caseType</fieldName>
+            <sourceType>INPUT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="4d2e0521-c432-456b-9aba-9671aa8c9e5b">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>caseSubject</contextKey>
+          <expression id="ef2fea6b-919b-4ea2-9c9d-919a13215104">
+            <annotation></annotation>
+            <name>Input: caseSubject</name>
+            <fieldName>caseSubject</fieldName>
+            <sourceType>INPUT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+    </returnStep>
+    <step id="9e455011-17f3-45a5-9009-4a112759cabe">
+      <annotation>4aa62a95-cb41-468b-960b-1847eae912a3.9e455011-17f3-45a5-9009-4a112759cabe.description</annotation>
+      <name>ParseXML</name>
+      <bounds>
+        <x>415.0</x>
+        <y>96.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <scriptlet id="17022d7c-03c2-40fb-baad-dd92f9bc210c">
+        <annotation></annotation>
+        <name>Step:ParseXML Flow:getTicketTypeSubject (9e455011-17f3-45a5-9009-4a112759cabe)</name>
+        <script></script>
+        <type>RHINO</type>
+      </scriptlet>
+      <bindings>
+        <staticBinding id="5b935027-d1cf-466f-b078-813fb07761e7">
+          <annotation></annotation>
+          <fromContextKey>ticketXML</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>xml</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="4089e412-4727-4f85-8c75-00233f2b9a0c">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>parameters</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>caseType=//*[local-name()=&apos;caseType&apos;]
+caseSubject=//*[local-name()=&apos;subject&apos;]</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="08ebe94c-24c3-49cd-af0e-b572d9760e65">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>errorMsg</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>getTicketByTicketId returned invalid XML</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="d119939b-69d8-44bd-bddc-0e0ded8bd413">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey></fromContextKey>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <recordKey></recordKey>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Field_1</inputSymbol>
+          <listDelimiter></listDelimiter>
+          <value>scriptletResponse</value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="75886dcf-9aaf-4ae6-8262-94e2e1ecd125">
+          <annotation></annotation>
+          <name>InvalidXML</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>9282ad5f-e05a-44ee-9ce5-daf69afed2e6</refId>
+          </destination>
+          <source>
+            <refId>9e455011-17f3-45a5-9009-4a112759cabe</refId>
+          </source>
+          <positions>
+            <point>
+              <x>431.0</x>
+              <y>221.0</y>
+            </point>
+            <point>
+              <x>325.0</x>
+              <y>352.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="69c43f0a-12e9-41d6-93fc-ef87c72b8ceb">
+          <annotation></annotation>
+          <name>XML Parsed Successfully</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>8bc36cd6-9c7b-41ef-9735-00e6f2c904e6</refId>
+          </destination>
+          <source>
+            <refId>9e455011-17f3-45a5-9009-4a112759cabe</refId>
+          </source>
+          <positions>
+            <point>
+              <x>468.0</x>
+              <y>121.0</y>
+            </point>
+            <point>
+              <x>618.0</x>
+              <y>195.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>496.64505739528914</x>
+            <y>0.7175918045422737</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>5d707e20-1766-4658-a740-660873fef584</refId>
+      </opRef>
+      <assignments/>
+      <throttleSize>0</throttleSize>
+    </step>
+  </steps>
+  <startSteps>36f637f7-53fa-4d39-9beb-ad82aedd3e2e</startSteps>
+</flow>

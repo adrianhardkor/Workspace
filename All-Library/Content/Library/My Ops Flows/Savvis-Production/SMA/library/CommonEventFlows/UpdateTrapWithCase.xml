@@ -1,0 +1,1309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow id="7085f7b6-fefb-4770-8a37-0f064ab40d07">
+  <descriptionCdata><![CDATA[7085f7b6-fefb-4770-8a37-0f064ab40d07.3a06a11f-69f8-4379-be5b-8b529e9bc648.description=<pre>Runs a SQL command.\nDoes not return any results (only whether the command was executed)\n\nInput Parameters\:\nDBServerName - hostname or ip address of db server\nDBPort - the port to connect to (Defaults - Oracle\: 1521, MSSQL\: 1433, Sybase\: 5000, Netcool\: 4100, DB2\: 50000)\nDatabase - the name of the database\nCommand - the command to execute\nDbType - (Oracle, MSSQL, Sybase, Netcool, DB2, Custom) type of database to connect to (if custom see the note below)\nUsername - sql or windows user to connect as\nPassword -  sql or windows user account password\nauthenticationType - (Sql, Windows) the type of authentication used to access the database (applicable only to MSSQL DbType); if empty, the Sql authentication will be used by default\n\nResponses\:\nsuccess - the command was executed successfully\nfailure - the command could not be executed\n\nExtra Results\:\nupdateCount - the update count of the command executed\n\nNOTE\: \nBy default, this op supports Oracle, MSSql, DB2, Sybase.  \nTo enable MySQL support, the JDBC drivers would need to be added to the %ICONCLUDE_HOME%\\RAS\\Java\\Default\\webapp\\WEB-INF\\lib directory and then update the SQLDBType selection list with the appropriate setting (MySQL). \nTo enable Netcool support, the JDBC driver (jconn2.jar) would need to be added to the %ICONCLUDE_HOME%\\RAS\\Java\\Default\\webapp\\WEB-INF\\lib directory and then update the SQLDBType selection list with the appropriate setting (Netcool)\n\nCUSTOM NOTE\:\nIf you want to use a custom JDBC driver than you must have the library installed as noted above.  Also, you will need add two new inputs to the operation\:\ndbClass - the classname of the JDBC driver to use\ndbURL - the url required to load up the driver and make your connection\nFor Windows authentication, the domain must be specified in dbURL and dbClass must point to a MSSQL driver.\nFor Sql authentication, the domain must not be specified in dbURL. \n\nDB2 NOTE\: \nThe DB2 commands should not be followed by ';'. Every time a table name is needed, it will be used in commands preceded by the name of the schema. So, every time a table is to be used, TABLE_NAME should be replaced by SCHEMA_NAME.TABLE_NAME.\n\nORACLE NOTE\:\nIt is possible to run PL/SQL procedures using this operation. The examples below present the syntax to be used for having the same efect as the following PL/SQL script\: \nBEGIN\nsend_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test');\nEND;\n\nExample 1\: BEGIN send_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test');END;\n\nExample 2\: BEGIN send_message('b@hp.com','pas@hp.com','Test','Test');END;\n\nExample 3\: {CALL send_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test')}\n\nExample 4\: {CALL send_message('b@hp.com','pas@hp.com','Test','Test')}\n</pre>
+7085f7b6-fefb-4770-8a37-0f064ab40d07.403ce9bd-94eb-4669-8758-df5d0a555859.description=<pre>Runs a SQL command.\nDoes not return any results (only whether the command was executed)\n\nInput Parameters\:\nDBServerName - hostname or ip address of db server\nDBPort - the port to connect to (Defaults - Oracle\: 1521, MSSQL\: 1433, Sybase\: 5000, Netcool\: 4100, DB2\: 50000)\nDatabase - the name of the database\nCommand - the command to execute\nDbType - (Oracle, MSSQL, Sybase, Netcool, DB2, Custom) type of database to connect to (if custom see the note below)\nUsername - sql or windows user to connect as\nPassword -  sql or windows user account password\nauthenticationType - (Sql, Windows) the type of authentication used to access the database (applicable only to MSSQL DbType); if empty, the Sql authentication will be used by default\n\nResponses\:\nsuccess - the command was executed successfully\nfailure - the command could not be executed\n\nExtra Results\:\nupdateCount - the update count of the command executed\n\nNOTE\: \nBy default, this op supports Oracle, MSSql, DB2, Sybase.  \nTo enable MySQL support, the JDBC drivers would need to be added to the %ICONCLUDE_HOME%\\RAS\\Java\\Default\\webapp\\WEB-INF\\lib directory and then update the SQLDBType selection list with the appropriate setting (MySQL). \nTo enable Netcool support, the JDBC driver (jconn2.jar) would need to be added to the %ICONCLUDE_HOME%\\RAS\\Java\\Default\\webapp\\WEB-INF\\lib directory and then update the SQLDBType selection list with the appropriate setting (Netcool)\n\nCUSTOM NOTE\:\nIf you want to use a custom JDBC driver than you must have the library installed as noted above.  Also, you will need add two new inputs to the operation\:\ndbClass - the classname of the JDBC driver to use\ndbURL - the url required to load up the driver and make your connection\nFor Windows authentication, the domain must be specified in dbURL and dbClass must point to a MSSQL driver.\nFor Sql authentication, the domain must not be specified in dbURL. \n\nDB2 NOTE\: \nThe DB2 commands should not be followed by ';'. Every time a table name is needed, it will be used in commands preceded by the name of the schema. So, every time a table is to be used, TABLE_NAME should be replaced by SCHEMA_NAME.TABLE_NAME.\n\nORACLE NOTE\:\nIt is possible to run PL/SQL procedures using this operation. The examples below present the syntax to be used for having the same efect as the following PL/SQL script\: \nBEGIN\nsend_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test');\nEND;\n\nExample 1\: BEGIN send_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test');END;\n\nExample 2\: BEGIN send_message('b@hp.com','pas@hp.com','Test','Test');END;\n\nExample 3\: {CALL send_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test')}\n\nExample 4\: {CALL send_message('b@hp.com','pas@hp.com','Test','Test')}\n</pre>
+7085f7b6-fefb-4770-8a37-0f064ab40d07.description=<pre>Updates Impact with trap information\n\nInputs\:\nserverSerial- from trap\nserverName- from trap\nstatus- set to SUCCESS if everything went fine;\n            set to FAILURE if there is a failure in the flow and a message of the failure will also be set\njournalEntry- what to enter in the trap's journal.\nticket- ticket id\n\nOutputs\:\n\nResponses\:\nsuccess - If everything went fine.\nfailure - If something went wrong.\n\n</pre>
+7085f7b6-fefb-4770-8a37-0f064ab40d07.fcfbad57-ec77-4c28-bf58-2cf4ebe7998a.description=<pre>Runs a SQL command.\nDoes not return any results (only whether the command was executed)\n\nInput Parameters\:\nDBServerName - hostname or ip address of db server\nDBPort - the port to connect to (Defaults - Oracle\: 1521, MSSQL\: 1433, Sybase\: 5000, Netcool\: 4100, DB2\: 50000)\nDatabase - the name of the database\nCommand - the command to execute\nDbType - (Oracle, MSSQL, Sybase, Netcool, DB2, Custom) type of database to connect to (if custom see the note below)\nUsername - sql or windows user to connect as\nPassword -  sql or windows user account password\nauthenticationType - (Sql, Windows) the type of authentication used to access the database (applicable only to MSSQL DbType); if empty, the Sql authentication will be used by default\n\nResponses\:\nsuccess - the command was executed successfully\nfailure - the command could not be executed\n\nExtra Results\:\nupdateCount - the update count of the command executed\n\nNOTE\: \nBy default, this op supports Oracle, MSSql, DB2, Sybase.  \nTo enable MySQL support, the JDBC drivers would need to be added to the %ICONCLUDE_HOME%\\RAS\\Java\\Default\\webapp\\WEB-INF\\lib directory and then update the SQLDBType selection list with the appropriate setting (MySQL). \nTo enable Netcool support, the JDBC driver (jconn2.jar) would need to be added to the %ICONCLUDE_HOME%\\RAS\\Java\\Default\\webapp\\WEB-INF\\lib directory and then update the SQLDBType selection list with the appropriate setting (Netcool)\n\nCUSTOM NOTE\:\nIf you want to use a custom JDBC driver than you must have the library installed as noted above.  Also, you will need add two new inputs to the operation\:\ndbClass - the classname of the JDBC driver to use\ndbURL - the url required to load up the driver and make your connection\nFor Windows authentication, the domain must be specified in dbURL and dbClass must point to a MSSQL driver.\nFor Sql authentication, the domain must not be specified in dbURL. \n\nDB2 NOTE\: \nThe DB2 commands should not be followed by ';'. Every time a table name is needed, it will be used in commands preceded by the name of the schema. So, every time a table is to be used, TABLE_NAME should be replaced by SCHEMA_NAME.TABLE_NAME.\n\nORACLE NOTE\:\nIt is possible to run PL/SQL procedures using this operation. The examples below present the syntax to be used for having the same efect as the following PL/SQL script\: \nBEGIN\nsend_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test');\nEND;\n\nExample 1\: BEGIN send_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test');END;\n\nExample 2\: BEGIN send_message('b@hp.com','pas@hp.com','Test','Test');END;\n\nExample 3\: {CALL send_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test')}\n\nExample 4\: {CALL send_message('b@hp.com','pas@hp.com','Test','Test')}\n</pre>
+7085f7b6-fefb-4770-8a37-0f064ab40d07.fdc589ba-b0a8-4e81-8bfa-e56b34297c9c.description=<pre>Runs a SQL command.\nDoes not return any results (only whether the command was executed)\n\nInput Parameters\:\nDBServerName - hostname or ip address of db server\nDBPort - the port to connect to (Defaults - Oracle\: 1521, MSSQL\: 1433, Sybase\: 5000, Netcool\: 4100, DB2\: 50000)\nDatabase - the name of the database\nCommand - the command to execute\nDbType - (Oracle, MSSQL, Sybase, Netcool, DB2, Custom) type of database to connect to (if custom see the note below)\nUsername - sql or windows user to connect as\nPassword -  sql or windows user account password\nauthenticationType - (Sql, Windows) the type of authentication used to access the database (applicable only to MSSQL DbType); if empty, the Sql authentication will be used by default\n\nResponses\:\nsuccess - the command was executed successfully\nfailure - the command could not be executed\n\nExtra Results\:\nupdateCount - the update count of the command executed\n\nNOTE\: \nBy default, this op supports Oracle, MSSql, DB2, Sybase.  \nTo enable MySQL support, the JDBC drivers would need to be added to the %ICONCLUDE_HOME%\\RAS\\Java\\Default\\webapp\\WEB-INF\\lib directory and then update the SQLDBType selection list with the appropriate setting (MySQL). \nTo enable Netcool support, the JDBC driver (jconn2.jar) would need to be added to the %ICONCLUDE_HOME%\\RAS\\Java\\Default\\webapp\\WEB-INF\\lib directory and then update the SQLDBType selection list with the appropriate setting (Netcool)\n\nCUSTOM NOTE\:\nIf you want to use a custom JDBC driver than you must have the library installed as noted above.  Also, you will need add two new inputs to the operation\:\ndbClass - the classname of the JDBC driver to use\ndbURL - the url required to load up the driver and make your connection\nFor Windows authentication, the domain must be specified in dbURL and dbClass must point to a MSSQL driver.\nFor Sql authentication, the domain must not be specified in dbURL. \n\nDB2 NOTE\: \nThe DB2 commands should not be followed by ';'. Every time a table name is needed, it will be used in commands preceded by the name of the schema. So, every time a table is to be used, TABLE_NAME should be replaced by SCHEMA_NAME.TABLE_NAME.\n\nORACLE NOTE\:\nIt is possible to run PL/SQL procedures using this operation. The examples below present the syntax to be used for having the same efect as the following PL/SQL script\: \nBEGIN\nsend_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test');\nEND;\n\nExample 1\: BEGIN send_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test');END;\n\nExample 2\: BEGIN send_message('b@hp.com','pas@hp.com','Test','Test');END;\n\nExample 3\: {CALL send_message(addressee\=>'b@hp.com',sender\=>'pas@hp.com',subject\=>'Test',message\=>'Test')}\n\nExample 4\: {CALL send_message('b@hp.com','pas@hp.com','Test','Test')}\n</pre>
+]]></descriptionCdata>
+  <annotation>7085f7b6-fefb-4770-8a37-0f064ab40d07.description</annotation>
+  <name>UpdateTrapWithCase</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="c4bd32c0-d966-402b-b4bd-d097d3c56fb1">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>serverSerial</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="bdfa1eab-a6e8-406c-a67f-9841439b6d07">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>serverName</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="5579e87b-0890-4f9b-883a-3161940a2070">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>status</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="28e0accf-7085-40cc-9763-822b020b4cd9">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>journalEntry</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="c710bdad-3043-4f44-a523-44104f129af1">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>ticket</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <possibleResponses>
+    <opResponse id="2607cc8f-efce-476e-a3fb-699164d4a158">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="f06a82d2-e4a3-4054-b605-1f822d94a739">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>false</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="3512e6b0-016e-49bb-978a-107240e1add5">
+    <annotation></annotation>
+    <name>FailureMessage</name>
+    <fieldName>FailureMessage</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="544fa1ec-41fa-452d-8d03-239bfe5b2950">
+    <baseIcon>flow.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <callouts/>
+  <checkPointFlow>true</checkPointFlow>
+  <compatibleRuntimeContext>false</compatibleRuntimeContext>
+  <historyCheckPointFlow>true</historyCheckPointFlow>
+  <steps>
+    <step id="403ce9bd-94eb-4669-8758-df5d0a555859">
+      <annotation>7085f7b6-fefb-4770-8a37-0f064ab40d07.403ce9bd-94eb-4669-8758-df5d0a555859.description</annotation>
+      <name>SQL Command - Insert Journal</name>
+      <bounds>
+        <x>61.0</x>
+        <y>15.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="b05c5020-fa11-464c-890b-9fcc5d52557c">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DBServerName</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_HOST}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="cfd58792-be5e-40c2-8d6e-9442f28cc32e">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DbType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_TYPE}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="4eefdbdd-7b02-484f-9d37-9c0338864f03">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DBPort</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_PORT}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="79d6a743-909e-4506-a9f8-1c4bda2f3d55">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Database</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_SCHEMA}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="921942f5-4154-45fb-b08f-e17f0bd84e90">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Command</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>insert into Forward_Event_Values
+(serverSerial, serverName, parameterName, parameterValue)
+VALUES (${serverSerial}, &apos;${serverName}&apos;, &apos;TicketId&apos;, &apos;${ticket}&apos;)</value>
+          <record>false</record>
+        </staticBinding>
+        <identityBinding id="4c52e4c3-385d-497a-8a17-c756ffb51a17">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>ENCRYPTED</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Username</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>19962f39-3c0f-4e52-924d-11a622fd68aa</refId>
+            <refName>SMA_TICKET_DATABASE_USER</refName>
+          </link>
+          <identityAttribute>USERNAME</identityAttribute>
+        </identityBinding>
+        <identityBinding id="50a0edd4-fe33-476c-9f21-ca4a7086d5e4">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>ENCRYPTED</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Password</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>19962f39-3c0f-4e52-924d-11a622fd68aa</refId>
+            <refName>SMA_TICKET_DATABASE_USER</refName>
+          </link>
+          <identityAttribute>PASSWORD</identityAttribute>
+        </identityBinding>
+        <staticBinding id="bbf3095d-864c-4105-ae48-0dd91a38245e">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>authenticationType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>Sql</value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="4a91bedf-3e70-4aa8-8c13-8522fc3dcfa5">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>232cb10d-4ed4-42d7-963e-3ef121461cd3</refId>
+          </destination>
+          <source>
+            <refId>403ce9bd-94eb-4669-8758-df5d0a555859</refId>
+          </source>
+          <positions>
+            <point>
+              <x>111.0</x>
+              <y>84.0</y>
+            </point>
+            <point>
+              <x>410.0</x>
+              <y>221.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="f14426ef-9271-4cf4-99fe-ae50df9b1ff5">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>a10b1fdf-34e2-431b-a4df-61bce7754136</refId>
+          </destination>
+          <source>
+            <refId>403ce9bd-94eb-4669-8758-df5d0a555859</refId>
+          </source>
+          <positions>
+            <point>
+              <x>111.0</x>
+              <y>49.0</y>
+            </point>
+            <point>
+              <x>109.0</x>
+              <y>191.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>a8dd819d-158a-43c4-9648-f14e561a5381</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="be9683ee-03af-4dcb-bde7-f9e931f1d748">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>returnResult</contextKey>
+          <expression id="2b96f138-03e5-4034-8f6c-c8c1d914b3e9">
+            <annotation></annotation>
+            <name>Result Field: returnResult</name>
+            <fieldName>returnResult</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+    <step id="fdc589ba-b0a8-4e81-8bfa-e56b34297c9c">
+      <annotation>7085f7b6-fefb-4770-8a37-0f064ab40d07.fdc589ba-b0a8-4e81-8bfa-e56b34297c9c.description</annotation>
+      <name>SQL Command - Insert Journal</name>
+      <bounds>
+        <x>63.0</x>
+        <y>302.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="1a7df686-1906-4877-8698-17a277817c98">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DBServerName</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_HOST}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="ecfaa6cd-ece3-44ae-af95-58882fc6f28d">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DbType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_TYPE}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="f4f753aa-3d0c-4ce9-93ba-b80330db97d4">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DBPort</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_PORT}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="30c09bae-351e-465d-a024-198501ae9887">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Database</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_SCHEMA}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="d4644612-2368-416c-99dc-b0c9ee69ae50">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Command</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>insert into Forward_Event_Values
+(serverSerial, serverName, parameterName, parameterValue)
+VALUES (${serverSerial}, &apos;${serverName}&apos;, &apos;Journal&apos;, ${journalEntry})</value>
+          <record>false</record>
+        </staticBinding>
+        <identityBinding id="c5ae7d36-f827-4351-974a-78cc86ec56fd">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>ENCRYPTED</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Username</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>19962f39-3c0f-4e52-924d-11a622fd68aa</refId>
+            <refName>SMA_TICKET_DATABASE_USER</refName>
+          </link>
+          <identityAttribute>USERNAME</identityAttribute>
+        </identityBinding>
+        <identityBinding id="1ee120dc-ca5b-40d6-85ff-1c441b4af721">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>ENCRYPTED</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Password</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>19962f39-3c0f-4e52-924d-11a622fd68aa</refId>
+            <refName>SMA_TICKET_DATABASE_USER</refName>
+          </link>
+          <identityAttribute>PASSWORD</identityAttribute>
+        </identityBinding>
+        <staticBinding id="af4bdec6-5422-40c9-a3c7-377845621a38">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>authenticationType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>Sql</value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="31b732de-7aea-4deb-a32a-35198d12d353">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>232cb10d-4ed4-42d7-963e-3ef121461cd3</refId>
+          </destination>
+          <source>
+            <refId>fdc589ba-b0a8-4e81-8bfa-e56b34297c9c</refId>
+          </source>
+          <positions>
+            <point>
+              <x>112.0</x>
+              <y>226.0</y>
+            </point>
+            <point>
+              <x>281.0</x>
+              <y>227.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="a02125e4-cf2d-4995-ac84-1da31cb0e245">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>fcfbad57-ec77-4c28-bf58-2cf4ebe7998a</refId>
+          </destination>
+          <source>
+            <refId>fdc589ba-b0a8-4e81-8bfa-e56b34297c9c</refId>
+          </source>
+          <positions>
+            <point>
+              <x>113.0</x>
+              <y>185.0</y>
+            </point>
+            <point>
+              <x>114.0</x>
+              <y>310.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>600.8167765156361</x>
+            <y>-4.979888417691166</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>a8dd819d-158a-43c4-9648-f14e561a5381</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="8025b299-06e8-4ee6-894f-5aa5793be85e">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>returnResult</contextKey>
+          <expression id="c3d77822-d4c3-42c3-b027-6eaae6932018">
+            <annotation></annotation>
+            <name>Result Field: returnResult</name>
+            <fieldName>returnResult</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+    <step id="a10b1fdf-34e2-431b-a4df-61bce7754136">
+      <annotation></annotation>
+      <name>ValidateJournalEntry</name>
+      <bounds>
+        <x>59.0</x>
+        <y>157.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <scriptlet id="b6631e3f-fc39-44d6-904a-eef30f9c39d0">
+        <annotation></annotation>
+        <name>Step:ValidateJournalEntry Flow:UpdateTrapWithCase (a10b1fdf-34e2-431b-a4df-61bce7754136)</name>
+        <script>var MAX_LEN = 253;
+
+myJournal = ReshapeJournal(journalEntry);
+if(myJournal == null)
+{
+    scriptletResponse = &quot;failure&quot;;
+}
+else
+{
+    scriptletContext.put(&quot;journalEntry&quot;, myJournal);
+    scriptletResponse = &quot;success&quot;;
+}
+
+
+
+/// Perform basic syntax check, to ensure can be used in the &quot;insert&quot; SQL statement
+/// Also truncate the overlength journalEntry to fit the MAX_LEN in NetCool and Impact
+function ReshapeJournal( journalEntry )
+{
+   // sanity check
+   if ( typeof(journalEntry) == &quot;undefined&quot; || journalEntry== null || journalEntry== &quot;undefined&quot; )
+   {
+      return null;
+   }
+
+   // the final result will be stored here
+   var myOutput = new String();
+   // temp local variable
+   var myGrowSpace = MAX_LEN - myOutput.length;
+   // temp local variable for input
+   var myJournal = new String(journalEntry);
+   myJournal = myJournal.replace(/^\s*/, &quot;&quot;);
+   myJournal = myJournal.replace(/\s*$/, &quot;&quot;);
+
+   while(myJournal.length &gt; 0 &amp;&amp; myGrowSpace &gt; 0)
+   {
+      var token;
+
+      // first, try to match &quot;&apos;######&apos;&quot;
+      if( token = myJournal.match(/^&apos;.*?&apos;/))
+      {
+         token = new String(token);
+         myJournal = myJournal.replace(token, &quot;&quot;);
+         if(token.length - 2 &gt; myGrowSpace)
+         { // hit the limit here
+            token = token.substring(0, myGrowSpace + 1);
+            token += &quot;&apos;&quot;;
+         }
+         myOutput += token;
+         myGrowSpace -= token.length - 2;
+      }
+      // second, try to match &quot;+char(10)&quot;
+      else if (token = myJournal.match(/^\s*\+\s*char\s*\(\s*\d+\s*\)/))
+      {
+         // could never hit limit here
+         myJournal = myJournal.replace(token, &quot;&quot;);
+         myOutput += token;
+         myGrowSpace -= 1;
+      }
+      // third, try to match &quot;+&quot;
+      else if (token = myJournal.match(/^\s*\+\s*/))
+      {
+         myJournal = myJournal.replace(token, &quot;&quot;);
+         myOutput += token;
+      }
+      else
+      {
+         // encounted something invalid
+         return null;
+      }
+
+      // remove prefix and postfix white space for each loop
+      myJournal = myJournal.replace(/^\s*/, &quot;&quot;);
+      myJournal = myJournal.replace(/\s*$/, &quot;&quot;);
+
+   } // end of while loop
+
+   return myOutput;
+}
+</script>
+        <type>RHINO</type>
+      </scriptlet>
+      <bindings>
+        <staticBinding id="47afa68c-9149-45a1-ae98-9ba65aa0ec92">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>journalEntry</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="ce4fa064-b316-47d1-b042-f438fe94b0e0">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>errorString</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>Invalid journalEntry</value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="d005dab6-b01b-498b-9963-562d80608ed9">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>fdc589ba-b0a8-4e81-8bfa-e56b34297c9c</refId>
+          </destination>
+          <source>
+            <refId>a10b1fdf-34e2-431b-a4df-61bce7754136</refId>
+          </source>
+          <positions>
+            <point>
+              <x>109.0</x>
+              <y>191.0</y>
+            </point>
+            <point>
+              <x>113.0</x>
+              <y>336.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>528.2598378940368</x>
+            <y>3.371204455862387</y>
+          </labelPosition>
+        </transition>
+        <transition id="541e1920-887e-4992-87df-0cc5c38f6b07">
+          <annotation></annotation>
+          <name>InvalidJournalEntry</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>232cb10d-4ed4-42d7-963e-3ef121461cd3</refId>
+          </destination>
+          <source>
+            <refId>a10b1fdf-34e2-431b-a4df-61bce7754136</refId>
+          </source>
+          <positions>
+            <point>
+              <x>109.0</x>
+              <y>191.0</y>
+            </point>
+            <point>
+              <x>307.0</x>
+              <y>397.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>438.39134888683685</x>
+            <y>10.81878387384509</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>81325f8d-d46d-4838-af89-e7cbf43aa9c1</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="06ced276-8e1e-4392-a307-454c94c97f20">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>returnResult</contextKey>
+          <expression id="6181a1c7-82e2-4514-a340-baf3b88076aa">
+            <annotation></annotation>
+            <name>Input: errorString</name>
+            <fieldName>errorString</fieldName>
+            <sourceType>INPUT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="2c595f4b-ddc4-404c-b24e-034a1df2e184">
+      <annotation></annotation>
+      <name>Resolved : success</name>
+      <bounds>
+        <x>304.0</x>
+        <y>572.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="91c7bbf8-1553-4d8e-be5f-5a8f6aee94cd">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>2c595f4b-ddc4-404c-b24e-034a1df2e184</refId>
+          </destination>
+          <source>
+            <refId>2c595f4b-ddc4-404c-b24e-034a1df2e184</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>RESOLVED</returnStepType>
+      <assignments/>
+    </returnStep>
+    <step id="fcfbad57-ec77-4c28-bf58-2cf4ebe7998a">
+      <annotation>7085f7b6-fefb-4770-8a37-0f064ab40d07.fcfbad57-ec77-4c28-bf58-2cf4ebe7998a.description</annotation>
+      <name>SQL Command - Insert Journal</name>
+      <bounds>
+        <x>63.0</x>
+        <y>443.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="70d4ebe3-9b12-4cdc-a22b-553cec782c44">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DBServerName</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_HOST}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="456c01ec-020e-4aeb-b989-398157a04151">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DbType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_TYPE}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="8d1bcc48-0fcd-4b43-b15d-c4e8be618016">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DBPort</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_PORT}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="d9b24c7b-b9e6-4229-b7e7-bc59f3548170">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Database</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_SCHEMA}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="e076278d-4cbd-4136-8173-fe053abfc119">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Command</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>insert into Forward_Event_Values 
+(serverSerial, serverName, parameterName, parameterValue) 
+VALUES (${serverSerial}, &apos;${serverName}&apos;, &apos;TicketSystem&apos;, &apos;Vantive&apos;)</value>
+          <record>false</record>
+        </staticBinding>
+        <identityBinding id="fb0069cf-e814-4266-856e-fd89cc4db88c">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>ENCRYPTED</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Username</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>19962f39-3c0f-4e52-924d-11a622fd68aa</refId>
+            <refName>SMA_TICKET_DATABASE_USER</refName>
+          </link>
+          <identityAttribute>USERNAME</identityAttribute>
+        </identityBinding>
+        <identityBinding id="a9afd6ab-01fa-4730-bd84-2a1b56a0d67c">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>ENCRYPTED</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Password</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>19962f39-3c0f-4e52-924d-11a622fd68aa</refId>
+            <refName>SMA_TICKET_DATABASE_USER</refName>
+          </link>
+          <identityAttribute>PASSWORD</identityAttribute>
+        </identityBinding>
+        <staticBinding id="0da7ac58-ddf7-4a3b-aadf-e5dc77a341e9">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>authenticationType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>Sql</value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="6b61eb98-199f-4f26-8e62-f4f745bb4a9b">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>3a06a11f-69f8-4379-be5b-8b529e9bc648</refId>
+          </destination>
+          <source>
+            <refId>fcfbad57-ec77-4c28-bf58-2cf4ebe7998a</refId>
+          </source>
+          <positions>
+            <point>
+              <x>114.0</x>
+              <y>310.0</y>
+            </point>
+            <point>
+              <x>114.0</x>
+              <y>454.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>809.5330890087138</x>
+            <y>-0.5238089438413962</y>
+          </labelPosition>
+        </transition>
+        <transition id="aecf9615-255c-4b30-b002-a9dcc9bdf359">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>232cb10d-4ed4-42d7-963e-3ef121461cd3</refId>
+          </destination>
+          <source>
+            <refId>fcfbad57-ec77-4c28-bf58-2cf4ebe7998a</refId>
+          </source>
+          <positions>
+            <point>
+              <x>114.0</x>
+              <y>310.0</y>
+            </point>
+            <point>
+              <x>281.0</x>
+              <y>227.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>a8dd819d-158a-43c4-9648-f14e561a5381</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="1fa7520e-b7c8-4c0b-8108-4b92a216dbc9">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>returnResult</contextKey>
+          <expression id="c9c91ddb-6f8a-4516-aaf6-0e07299b122e">
+            <annotation></annotation>
+            <name>Result Field: returnResult</name>
+            <fieldName>returnResult</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="232cb10d-4ed4-42d7-963e-3ef121461cd3">
+      <annotation></annotation>
+      <name>Error : failure</name>
+      <bounds>
+        <x>314.0</x>
+        <y>307.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="b9cf93f3-e0a6-4a8c-afe8-3c75723af454">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>232cb10d-4ed4-42d7-963e-3ef121461cd3</refId>
+          </destination>
+          <source>
+            <refId>232cb10d-4ed4-42d7-963e-3ef121461cd3</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>ERROR</returnStepType>
+      <assignments/>
+    </returnStep>
+    <step id="3a06a11f-69f8-4379-be5b-8b529e9bc648">
+      <annotation>7085f7b6-fefb-4770-8a37-0f064ab40d07.3a06a11f-69f8-4379-be5b-8b529e9bc648.description</annotation>
+      <name>SQL Command - Update Status</name>
+      <bounds>
+        <x>63.0</x>
+        <y>571.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="de1bd5db-0a83-46b1-ae6c-90e4e9a61dcd">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DBServerName</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_HOST}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="dc437fb9-0f5a-43ec-99a0-fe7239f8c7e1">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DbType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_TYPE}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="abe804b3-f686-4815-b80e-5056b5c0538b">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>DBPort</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_PORT}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="9ca8c00b-d561-4b40-9ccd-9ac7dee94e7f">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Database</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${SMA_TICKET_DATABASE_SCHEMA}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="731fbcaf-2365-49cb-aa6e-21a13960953b">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Command</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>update Forward_Event_Status 
+set resolvedDate = GETUTCDATE(), status = &apos;${status}&apos;
+where serverSerial = ${serverSerial}
+and serverName = &apos;${serverName}&apos;</value>
+          <record>false</record>
+        </staticBinding>
+        <identityBinding id="e8a0bea6-3c96-4c86-9c7e-a612ceef846f">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>ENCRYPTED</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Username</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>19962f39-3c0f-4e52-924d-11a622fd68aa</refId>
+            <refName>SMA_TICKET_DATABASE_USER</refName>
+          </link>
+          <identityAttribute>USERNAME</identityAttribute>
+        </identityBinding>
+        <identityBinding id="29c38883-e07d-4436-8054-4184ac302020">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>ENCRYPTED</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>Password</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>19962f39-3c0f-4e52-924d-11a622fd68aa</refId>
+            <refName>SMA_TICKET_DATABASE_USER</refName>
+          </link>
+          <identityAttribute>PASSWORD</identityAttribute>
+        </identityBinding>
+        <staticBinding id="56b9063a-b4b0-457a-b72e-8e586383f2af">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>authenticationType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>Sql</value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="5586704f-4207-435e-9bd8-fb18c47adb6a">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>2c595f4b-ddc4-404c-b24e-034a1df2e184</refId>
+          </destination>
+          <source>
+            <refId>3a06a11f-69f8-4379-be5b-8b529e9bc648</refId>
+          </source>
+          <positions>
+            <point>
+              <x>128.0</x>
+              <y>374.0</y>
+            </point>
+            <point>
+              <x>383.0</x>
+              <y>367.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="8e15621a-934c-436c-a44a-2420926efc32">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>232cb10d-4ed4-42d7-963e-3ef121461cd3</refId>
+          </destination>
+          <source>
+            <refId>3a06a11f-69f8-4379-be5b-8b529e9bc648</refId>
+          </source>
+          <positions>
+            <point>
+              <x>115.0</x>
+              <y>368.0</y>
+            </point>
+            <point>
+              <x>281.0</x>
+              <y>227.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>a8dd819d-158a-43c4-9648-f14e561a5381</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="2bb02cf4-6542-4afb-96d0-a604d6e810fe">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>returnResult</contextKey>
+          <expression id="5d7c3563-32e2-4798-b5ca-75ef8a0786a6">
+            <annotation></annotation>
+            <name>Result Field: returnResult</name>
+            <fieldName>returnResult</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+  </steps>
+  <startSteps>403ce9bd-94eb-4669-8758-df5d0a555859</startSteps>
+</flow>

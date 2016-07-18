@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="faba3c71-b875-493b-930d-c3d65723f5ab">
+  <descriptionCdata><![CDATA[faba3c71-b875-493b-930d-c3d65723f5ab.description=<pre>\n\nScriptlet that grabs all keys and out puts only keys that have Local values.  This is to emulate an ARGV type functionality.\n\nWill only provide inputs of direct flow calling this operation.\n\nInternal variables that can be potentially disregaurded\: (example was runCLU)\nusername\nexecution_thread_id\nRS_Previous_Transition\nwebserviceHost\nerrorDetails\nResult\nRS_Previous_Response\npassword\nflowUuid\nwebservicePort\n\n</pre>
+]]></descriptionCdata>
+  <annotation>faba3c71-b875-493b-930d-c3d65723f5ab.description</annotation>
+  <name>print_local_args_and_values</name>
+  <categories/>
+  <inputs/>
+  <scriptlet id="ffd128de-c731-44f4-88c0-41b92ebdc2d3">
+    <annotation></annotation>
+    <name>Operation:print_local_args_and_values (faba3c71-b875-493b-930d-c3d65723f5ab)</name>
+    <script>
+var keys = String(scriptletContext.keySet()).replace(&quot;[&quot;,&quot;&quot;,&quot;g&quot;).replace(&quot;]&quot;,&quot;&quot;,&quot;g&quot;).replace(&quot;, &quot;,&quot;,&quot;,&quot;g&quot;).split(&quot;,&quot;);
+var locals = [];
+var globals = [];
+for (var i = 0; i &lt; keys.length; i++) {
+	if (scriptletContext.getLocal(keys[i]) == null || scriptletContext.getLocal(keys[i]) == &quot;&quot; || typeof scriptletContext.getLocal(keys[i]) == &quot;undefined&quot; ) {
+	    globals.push(keys[i]);
+	    } else {
+	    var myInput = keys[i] + &quot; = &quot; +  scriptletContext.getLocal(keys[i]);
+        locals.push(myInput);
+		}
+}
+
+scriptletResult = locals.sort().join(&quot;&lt;br&gt;&quot;);
+scriptletResponse = &quot;success&quot;;
+
+
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="2ac2379b-2336-46d5-a312-810a9667c23e">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="04ea2007-c596-4403-8cd5-0e782303ea81">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="0ac3df86-3371-45b0-9e35-d184781e0d7f">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="37267b6b-9486-4019-b11d-1d77ec0138ed">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

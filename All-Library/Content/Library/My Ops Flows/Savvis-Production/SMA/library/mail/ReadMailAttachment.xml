@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="e6119706-d7ae-4124-9494-fcfa9171756e">
+  <descriptionCdata><![CDATA[e6119706-d7ae-4124-9494-fcfa9171756e.description=Gets the filename and attachment from a mail message as returned from /Libaries/Operations/Email/Get Mail Message\nThis message is assumed to be a valid multipart mime mesage, note copying and pating message outputs may introduce invalid characters in a message.\nScript relies on java mail and apache commons codec libraries currently available in OO as of OO 7.5 but this script may not work in future OO releases\n\nInputs \nmessage - the raw message string\nNote\: due to OO truncating strings at 1024 characters another option is to pace a rawMessageBytes Java byte array in the context and that will be used instead of message\ncontentType - the content type of the attachment you are looking for, can be a partial name like "excel" instead of "application/vnd.ms-excel"\n\nOuputs\nscriptResult - the attachment base 64 encoded if script succeeds or could not find contentType XXX if script fails.\nfilename - filename of the attchment if script succeeds\nmessageFrom - sender of email\nmessageSubject - subject of email\n\nUseful for debugging outputs...\nrawMessageLength - length of message string (or rawMessageBytes)\nmessageContent - payload of non multipart mime message if script fails\nmessageContentClass - Java inferred class of non multipart mime message if script fails\n
+]]></descriptionCdata>
+  <annotation>e6119706-d7ae-4124-9494-fcfa9171756e.description</annotation>
+  <name>ReadMailAttachment</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="1c0b50fb-c7a6-40d0-8a5b-b67af3fa67d7">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>message</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>${message}</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="4558592b-994e-491e-849a-09f6179b3f5b">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>contentType</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>${contentType}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="1d012cf9-6338-47d3-83e3-05a623a1b954">
+    <annotation></annotation>
+    <name>Operation ReadMailAttachment (e6119706-d7ae-4124-9494-fcfa9171756e)</name>
+    <script>// blame Ross Bonner - ross.bonner@savvis.net
+scriptletResponse = &quot;failure&quot;;
+var messageBytes = scriptletContext.get(&quot;rawMessageBytes&quot;);
+if (!messageBytes) {
+    messageBytes = new java.lang.String(message).getBytes(&quot;US-ASCII&quot;);
+}
+scriptletContext.put(&quot;rawMessageLength&quot;, messageBytes.length);
+var messageStream = new java.io.ByteArrayInputStream(messageBytes);
+var mimeMessage = new javax.mail.internet.MimeMessage(null, messageStream);
+scriptletContext.put(&quot;messageSubject&quot;, mimeMessage.getSubject());
+var from = mimeMessage.getFrom();
+scriptletContext.put(&quot;messageFrom&quot;, (from)? java.util.Arrays.asList(from).toString(): &quot;&quot;);
+//scriptletResult = &quot;could not find contentType: &quot; + contentType;
+var parts = mimeMessage.getContent();
+var partsClass = parts.getClass(); 
+if (partsClass.getName().equals(&quot;javax.mail.internet.MimeMultipart&quot;)) {
+    var partsCount = parts.getCount();
+    for (var i = 0; i &lt; partsCount; i++) {
+        var body = parts.getBodyPart(i);
+        if (body.getContentType().match(contentType)) {
+            scriptletContext.put(&quot;filename&quot;, body.getFileName());
+            var buffer = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, body.getSize());
+            var attachmentStream = body.getInputStream();
+            var read = 0, count = 0;
+            while ((read = attachmentStream.read(buffer, count, buffer.length - count)) &gt; -1) {
+                count += read;
+            }
+            attachmentStream.close();
+            var temp = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, count);
+            java.lang.System.arraycopy(buffer, 0, temp, 0, count);
+            buffer = temp;
+            temp = null;
+            scriptletResult = new java.lang.String(org.apache.commons.codec.binary.Base64.encodeBase64(buffer, true), &quot;US-ASCII&quot;);
+            scriptletResponse = &quot;success&quot;;
+            break;
+        }
+    }
+} else {
+    scriptletContext.put(&quot;messageContent&quot;, parts);
+    scriptletContext.put(&quot;messageContentClass&quot;, partsClass);
+}
+messageStream.close();
+messageStream = null;
+parts = null;
+mimeMessage = null;
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="1b4374cd-3568-4a43-b9d7-3aa8edae72f5">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="4a0a7dbd-2478-43e7-95b1-47f2072e8484">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="a6df752b-9351-4d4a-98cc-c694fd814e44">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="2932c10d-9007-4eb5-8506-f3d39757d305">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

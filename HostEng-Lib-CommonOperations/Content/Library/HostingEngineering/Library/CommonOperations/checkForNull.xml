@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="353645ed-dbcc-49a2-9751-479b2d773e90">
+  <descriptionCdata><![CDATA[353645ed-dbcc-49a2-9751-479b2d773e90.description=<pre>Operation to check for null or empty string local variables.\n\nInputs\:\n\ninputList\:  comma seperated list of variables to check\n\nReponsses\:\nhasNull\:  at least one variable is null or has an empy string for a value\nnoNulls\:  all variables have a value\n\nResult\:  List of variables that are null or empty strings\n\n</pre>
+]]></descriptionCdata>
+  <annotation>353645ed-dbcc-49a2-9751-479b2d773e90.description</annotation>
+  <name>checkForNull</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="c3862476-669e-4264-89be-ec6e48e73558">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>inputList</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="a69e5941-a72c-44f7-bfa4-9e8c793f3aa6">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${inputList}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="eaca73f8-6880-4bd9-8379-a24c11b808b2">
+    <annotation></annotation>
+    <name>Operation checkForNull (353645ed-dbcc-49a2-9751-479b2d773e90)</name>
+    <script>var myInputs = inputList.split(&quot;,&quot;);
+var myNullResult = &quot;&quot;;
+for (var i = 0; i &lt; myInputs.length; i++) {
+	if (scriptletContext.get(myInputs[i]) == null || trim(scriptletContext.get(myInputs[i]))==&quot;&quot;)
+		myNullResult += myInputs[i] + &quot; isNull\n&quot;;
+}
+
+if (myNullResult.length &gt; 0) {
+	scriptletResponse = &quot;hasNull&quot;; 
+	scriptletResult = myNullResult;}
+else
+	scriptletResponse = &quot;noNulls&quot;;
+		
+function trim(value){
+var s = &quot;&quot;+value;
+s.replace(/^\s*|\s*$/g, &quot;&quot;)
+return s;
+}</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="f660da13-f38b-4731-8bbc-444c928e0872">
+      <annotation></annotation>
+      <name>noNulls</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="3fde75d8-ef1b-415c-a70a-6afdd0e5a66a">
+      <annotation></annotation>
+      <name>hasNull</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="9162af7c-b28c-456b-bdfb-3f47ce80c720">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="0f8b46b0-853d-4810-9d02-a339bfdcb64b">
+    <baseIcon>text_code_javascript.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scriptlet id="a09a316a-2156-424c-aaf0-c01149bd1e1d">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>getDate</name>
+  <script>scriptletResponse = &quot;failure&quot;;
+try
+{
+var date = new java.util.Date();
+var oLocale; // = java.util.Locale object
+var formatter; // = java.text.DateFormat.getDateTimeInstance();
+
+if(typeof localeLang != &apos;undefined&apos; &amp;&amp; null != localeLang &amp;&amp; localeLang.length &gt;0)
+{
+     if(typeof localeCountry != &apos;undefined&apos; &amp;&amp; null != localeCountry &amp;&amp; localeCountry.length &gt;0)
+     {
+          oLocale = new java.util.Locale(localeLang, localeCountry); //for exsample US or JP
+     }
+     else //only has language, no country
+     {
+          oLocale = new java.util.Locale(localeLang);//for example en or ja
+     }
+     formatter = new java.text.DateFormat.getDateTimeInstance(java.text.DateFormat.LONG, java.text.DateFormat.LONG, oLocale);
+}
+else //use whatever default is
+{
+}
+scriptletResult = &quot;&quot;+formatter.format(date); 
+scriptletResponse = &quot;success&quot;;
+}
+catch (e)
+{
+scriptletResponse = &quot;failure&quot;;
+scriptletResult = &quot;&quot;+e;
+}</script>
+  <type>RHINO</type>
+</scriptlet>

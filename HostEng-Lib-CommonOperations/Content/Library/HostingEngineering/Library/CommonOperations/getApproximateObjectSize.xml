@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="52b8a2cf-fdf5-412e-94cc-01412c29abf3">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>getApproximateObjectSize</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="10154712-57bc-474a-aa86-d6907b3430b3">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>theThing</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <scriptlet id="a0140f8e-12d8-434f-8e82-20f031ead701">
+    <annotation></annotation>
+    <name>Operation:getApproximateObjectSize (52b8a2cf-fdf5-412e-94cc-01412c29abf3)</name>
+    <script>scriptletResult = sizeof(theThing);
+scriptletResponse = &quot;success&quot;; 
+
+/*
+sizeof.js
+
+A function to calculate the approximate memory usage of objects
+
+Created by Stephen Morley - http://code.stephenmorley.org/ - and released under
+the terms of the CC0 1.0 Universal legal code:
+
+http://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+*/
+
+/* Returns the approximate memory usage, in bytes, of the specified object. The
+ * parameter is:
+ *
+ * object - the object whose size should be determined
+ */
+function sizeof(object){
+
+  // initialise the list of objects and size
+  var objects = [object];
+  var size    = 0;
+
+  // loop over the objects
+  for (var index = 0; index &lt; objects.length; index ++){
+
+    // determine the type of the object
+    switch (typeof objects[index]){
+
+      // the object is a boolean
+      case &apos;boolean&apos;: size += 4; break;
+
+      // the object is a number
+      case &apos;number&apos;: size += 8; break;
+
+      // the object is a string
+      case &apos;string&apos;: size += 2 * objects[index].length; break;
+
+      // the object is a generic object
+      case &apos;object&apos;:
+
+        // if the object is not an array, add the sizes of the keys
+        if (Object.prototype.toString.call(objects[index]) != &apos;[object Array]&apos;){
+          for (var key in objects[index]) size += 2 * key.length;
+        }
+
+        // loop over the keys
+        for (var key in objects[index]){
+
+          // determine whether the value has already been processed
+          var processed = false;
+          for (var search = 0; search &lt; objects.length; search ++){
+            if (objects[search] === objects[index][key]){
+              processed = true;
+              break;
+            }
+          }
+
+          // queue the value to be processed if appropriate
+          if (!processed) objects.push(objects[index][key]);
+
+        }
+
+    }
+
+  }
+
+  // return the calculated size
+  return size;
+
+}
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="c1e4d1c8-9009-4a32-b7e3-e6c298b7bbd6">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="486c3894-bc1c-40b4-b7c6-40d0fea6a924">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="3a913075-af3e-46c6-acad-b736c2b0c258">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="050d25cd-a3d5-41a2-ae5b-310ff84b8536">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

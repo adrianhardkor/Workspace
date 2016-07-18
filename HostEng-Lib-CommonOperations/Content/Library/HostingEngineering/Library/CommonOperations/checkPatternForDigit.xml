@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="577f96a3-580a-4c68-ba29-dec6ca176b30">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>checkPatternForDigit</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="350f920b-5d8f-4781-ade7-8fcf5a4ba88b">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>myPattern</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="0175364a-359f-4ee4-9973-54fcfd70c3ae">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${myPattern}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="948eb69f-754c-42ce-af4c-4088aa0bcfe0">
+    <annotation></annotation>
+    <name>Operation:checkPatternForDigit (577f96a3-580a-4c68-ba29-dec6ca176b30)</name>
+    <script>var myMatch = myPattern.match(/\d+/g);
+
+if (myMatch == null || myMatch == &quot;&quot;) {
+    scriptletResponse = &quot;noDigit&quot;;
+    }
+else { 
+    scriptletResponse = &quot;hasDigit&quot;;
+    scriptletResult = myMatch;
+  }
+</script>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="5e7fb377-0809-4e44-b0c5-f6ca522fbf66">
+      <annotation></annotation>
+      <name>hasDigit</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules>
+        <expression id="204445fe-1569-4c87-ad9a-caa1d41d7143">
+          <annotation></annotation>
+          <name>Field 1</name>
+          <fieldName>Field_1</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="2586ff33-6159-4989-bc14-f9b7a1d74142">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>hasDigit</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+    <opResponse id="9b8f9fa7-ba0f-4ffc-afe9-add89c50285f">
+      <annotation></annotation>
+      <name>noDigit</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>NO_ACTION_TAKEN</type>
+      <matchRules>
+        <expression id="43d95635-7109-4ea5-ab93-442cb69db817">
+          <annotation></annotation>
+          <name>Field 1</name>
+          <fieldName>Field_1</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="ca5b2bb5-61ec-43a2-9cf2-e91d4926819f">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>noDigit</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="85e3a52b-9783-46dd-8921-31cafc698fba">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="4e48d41a-c1bf-4a9d-8b9a-5670b0186766">
+    <baseIcon>scriptlet.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

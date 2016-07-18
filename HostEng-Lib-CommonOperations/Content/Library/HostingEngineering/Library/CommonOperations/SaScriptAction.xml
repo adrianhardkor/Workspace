@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="2879857c-ebd5-488b-a3e2-989b69ebff92">
+  <descriptionCdata><![CDATA[2879857c-ebd5-488b-a3e2-989b69ebff92.22b66827-7bf8-4a43-9aa6-77a747656b1e.prompt=Enter script name\:
+2879857c-ebd5-488b-a3e2-989b69ebff92.description=Action runs SA scripts (UNIX, Windows and OGFS)\nUses default SA permissions for script execution\n\nparameters\:\nusername - SA username\npassword - SA password\nhost - SA host\nport - SA port\nhttps - true to use HTTPS when connecting to SA, otherwise use HTTP, defaults to true\nscriptName - full path of script to run\ntarget - working directory if this is an OGFS script; SA name, DNS name or IP address for server scripts\nscriptParams - parameters for the script\ntimeout - timeout for script execution in seconds, defaults to 60 seconds\njobUserTag - tag associated with job, typically a ticket number\nfailureOwner - email address to notify in if script fails (OGFS)\nfailureRecipients - comma separated email address list to notify in if script fails (OGFS)\nsuccessOwner - email address to notify when script succeeds (OGFS)\nsuccessRecipients - comma separated email address list to notify in if script succeeds (OGFS)\n\nreturns\:\nreturnResult - exitCode if successful, job status or exception on failure, reason given when blocked or cancelled\nstderr - standard error output of script, limited to 10K\nstdout - standard output of script, limited to 10K
+]]></descriptionCdata>
+  <annotation>2879857c-ebd5-488b-a3e2-989b69ebff92.description</annotation>
+  <name>SaScriptAction</name>
+  <categories/>
+  <inputs>
+    <identityBinding id="7c2d056d-a9c9-4421-97af-4c6105033eb7">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>username</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>ENCRYPTED</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>username</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <link>
+        <refId>b2e57e11-0ca5-4bc6-ba5f-7a20d3004088</refId>
+        <refName>hosteng_sauser</refName>
+      </link>
+      <identityAttribute>USERNAME</identityAttribute>
+    </identityBinding>
+    <identityBinding id="b201c083-d43f-4a97-b926-e554db31e12b">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>password</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>ENCRYPTED</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>password</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <link>
+        <refId>b2e57e11-0ca5-4bc6-ba5f-7a20d3004088</refId>
+        <refName>hosteng_sauser</refName>
+      </link>
+      <identityAttribute>PASSWORD</identityAttribute>
+    </identityBinding>
+    <staticBinding id="6759e502-cae8-4c71-9b6b-0417288bc0fb">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>host</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>host</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>${hosteng_sahost}</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="e2d2366e-f135-4f27-8c20-df90a484c621">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>port</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>port</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>443</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="7c336721-3334-4d28-8fb8-99602e851133">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>https</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>https</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>true</value>
+      <record>false</record>
+    </staticBinding>
+    <userInputBinding id="22b66827-7bf8-4a43-9aa6-77a747656b1e">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>scriptName</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>scriptName</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt>2879857c-ebd5-488b-a3e2-989b69ebff92.22b66827-7bf8-4a43-9aa6-77a747656b1e.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="d7a9c676-3c1c-44f8-9862-ceba977f0026">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>target</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>target</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="306024cb-e949-4efd-a83b-66be6751b8a5">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>scriptParams</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>scriptParams</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="d66b3b7d-7ed9-4040-9bf9-329a26abd162">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>jobUserTag</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>jobUserTag</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="072ff3cb-f67c-438e-b94f-8e50e570a453">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>timeout</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>timeout</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>300</value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="16ba6b02-d2fc-45a6-bd1e-5e75daeaaa08">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>failureOwner</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>failureOwner</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="e7f915c8-9804-43ec-958b-d069e1a53422">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>successOwner</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>successOwner</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="743633b1-52ff-4f19-a3d9-970bf6e36488">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>failureRecipients</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>failureRecipients</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="4ae155d7-0b04-4c44-be24-d0b9bc9c5e6d">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey>successRecipients</fromContextKey>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>successRecipients</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <possibleResponses>
+    <opResponse id="e2b28cce-8de3-4b9c-a67b-19fa6e3f5504">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules>
+        <expression id="119ab202-fff4-4fb8-b80b-d1d97174f864">
+          <annotation></annotation>
+          <name>returnCode</name>
+          <fieldName>returnCode</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="14ba0584-67ec-4d55-b11d-080fff29f2e7">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>0</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+    <opResponse id="ba6e4d84-71c5-499f-b60c-f02cbcbe87cc">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>ERROR</type>
+      <matchRules>
+        <expression id="f09c047d-b821-416a-82b4-2cf502e2f33c">
+          <annotation></annotation>
+          <name>returnCode</name>
+          <fieldName>returnCode</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="fb2154fa-c9e2-425c-a638-d9188fdbcf53">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>1</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+    <opResponse id="d5ad51da-94d4-4e99-8af8-9c2d589f5364">
+      <annotation></annotation>
+      <name>blocked</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>NO_ACTION_TAKEN</type>
+      <matchRules>
+        <expression id="e2c50d86-0733-4c32-ab96-9aeb1d4e79d7">
+          <annotation></annotation>
+          <name>returnCode</name>
+          <fieldName>returnCode</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="3129c0ff-81af-4b9a-89a1-d2f0f73747eb">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>2</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+    <opResponse id="ca692689-067d-4836-9a79-6629b8d7b69c">
+      <annotation></annotation>
+      <name>cancelled</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>NO_ACTION_TAKEN</type>
+      <matchRules>
+        <expression id="dfb267fb-b69e-4864-9e2d-bc2784f025ab">
+          <annotation></annotation>
+          <name>returnCode</name>
+          <fieldName>returnCode</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="f06fe132-750a-4617-9852-9b56a297dbe2">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>3</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions>
+    <expression id="2f078e27-2a2f-4388-a284-ca8eeea1022e">
+      <annotation></annotation>
+      <name>returnResult</name>
+      <fieldName>returnResult</fieldName>
+      <sourceType>RAWRESULT</sourceType>
+      <filters/>
+    </expression>
+    <expression id="09374749-d471-4038-b3b1-9b3690994046">
+      <annotation></annotation>
+      <name>stderr</name>
+      <fieldName>stderr</fieldName>
+      <sourceType>RAWRESULT</sourceType>
+      <filters/>
+    </expression>
+    <expression id="8e6e0442-ff9d-49d1-8d90-7ae05ac6f4e9">
+      <annotation></annotation>
+      <name>stdout</name>
+      <fieldName>stdout</fieldName>
+      <sourceType>RAWRESULT</sourceType>
+      <filters/>
+    </expression>
+  </availableResultExpressions>
+  <resultExpression id="0cb4bdda-56d2-4f50-b2e0-f8ecf90dc07b">
+    <annotation></annotation>
+    <name>returnCode</name>
+    <fieldName>stdout</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="4b5e50ad-dc12-420d-95b7-6a7a9a24b9f1">
+    <baseIcon>band_aid.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>d54dc206-d236-4db1-b494-63090ffb2a9b</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+  <overrideGroupAlias>${overrideJRAS}</overrideGroupAlias>
+</operation>
